@@ -1,0 +1,266 @@
+@use "../Variables.scss" as *;
+@use "../main.scss" as *;
+
+$marginLeftToImage: 20px;
+
+#login{  
+    position: absolute;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+#profileImage{
+    border-radius: 100%;
+    grid-area: 1 / 1 / 3 / 2;
+    margin-top: 4px;
+    margin-left: 10px;
+    height: auto;
+    max-width: 100%;
+    display: block;
+    border: 0 solid #e3e3e3;
+    box-sizing: border-box;
+}
+
+#centerGooglelogin[login] #google{
+    display: none !important;
+}
+
+#centerGooglelogin:not([login]) #login{
+    display: none !important;
+}
+
+#google{
+    display: grid;
+    grid-template-columns: 35px 1fr;
+    grid-template-rows: repeat(2, 17.5px);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+}
+
+#email{
+    grid-area: 2 / 2 / 3 / 3;
+    font-size: 11px;
+    margin-top: 5px;
+    margin-left: $marginLeftToImage;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 170px;
+    overflow: hidden;
+}
+
+#name{
+    grid-area: 1 / 2 / 2 / 3;
+    margin-left: $marginLeftToImage;
+}
+
+#profileOptions[show]{
+    transition: height 0.2s linear, $DEFAULT_TRANSITION;
+    width: inherit;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: fixed;
+    transform-origin: bottom;
+    transform: translateY(-25%);
+    bottom: var(--bottom);
+    left: 0px;
+}
+
+#profileOptions:not([show]){
+    display: none;
+    height: 0px;
+    transition: height 0.2s linear, $DEFAULT_TRANSITION;
+}
+
+#sideMenu:not([open]) #profileOptions{
+    opacity: 0;
+    transition: opacity 0.1s, $DEFAULT_TRANSITION;
+}
+
+#sideMenu[open] #profileOptions{
+    opacity: 1;
+    transition: opacity 0.1s, $DEFAULT_TRANSITION;
+}
+
+#usage, #logout, #payIn, #deleteAllChats, #globalSettings, #touapp{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    width: inherit !important;
+    height: 40px;
+    background-color: transparent;
+    background-image: none;
+    text-transform: none;
+    font-family: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+}
+
+
+#payIn{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#touapp{
+    margin-top: 10px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+
+
+#touapp a{
+    @extend .link;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logout img, #usage img, #payIn img, #deleteAllChats img, #globalSettings img{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+#logout:hover, #usage:hover, #payIn:hover, #deleteAllChats:hover, #globalSettings:hover{
+    cursor: pointer;
+}
+
+#loading:not([show]){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    font-size: 20px;
+    letter-spacing: 4px;
+}
+
+#loading:not([show])::after{
+    content: "";
+    margin-left: 10px;
+    animation: dots 1s linear infinite;
+}
+
+#loading[show]{
+    display: none;
+}
+
+@keyframes dots{
+    0%{
+        content: "";
+    }
+    25%{
+        content: ".";
+    }
+    50%{
+        content: "..";
+    }
+    75%{
+        content: "...";
+    }
+    100%{
+        content: "";
+    }
+}
+
+#login .center{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100px;
+    width: 100%;
+    margin-top: 50px;
+}
+
+#registerDiv, #loginDiv{
+    display: none;  
+    width: calc(500px / 1.7);
+    height: auto;
+}
+
+#registerDiv[show], #loginDiv[show]{
+    display: block;
+    transform: scale(1.7);
+}
+
+.g_id_signin, #g_id_onload{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#credential_picker_container{
+    width: auto !important;
+    height: auto !important;
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    // top: var(--top);
+}
+
+#credential_picker_container iframe{
+    width: 500px !important;
+}
+
+.dark{
+    #profileOptions{
+        background-color: lighten($gray-800, 4%);
+        box-shadow: 0px -22px 31px rgba(0, 0, 0, 0.5);
+    }
+
+    #usage, #logout, #payIn, #deleteAllChats, #globalSettings, #touapp{
+        color: $white;
+    }
+
+    #logout:hover, #usage:hover, #payIn:hover, #deleteAllChats:hover, #globalSettings:hover{
+        background-color: $gray-600;
+    }
+
+    #touapp a:first-of-type{
+        border-right: 1px solid $gray-600;
+    }
+    
+    #touapp a:last-of-type{
+        border-left: 1px solid $gray-600;
+    }
+
+    #touapp{
+        border-top: 2px solid $gray-600;
+    }
+    
+}
+
+.light{
+    #profileOptions{
+        background-color: darken($gray-200, 4%);
+        box-shadow: -3px -10px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #usage, #logout, #payIn, #deleteAllChats, #globalSettings, #touapp{
+        color: $black;
+    }
+
+    #logout:hover, #usage:hover, #payIn:hover, #deleteAllChats:hover, #globalSettings:hover{
+        background-color: $gray-400;
+    }
+
+    #touapp a:first-of-type{
+        border-right: 1px solid $gray-400;
+    }
+    
+    #touapp a:last-of-type{
+        border-left: 1px solid $gray-400;
+    }
+
+    #touapp{
+        border-top: 2px solid $gray-400;
+    }
+}

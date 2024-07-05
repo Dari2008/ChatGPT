@@ -1,0 +1,98 @@
+@use "../Variables.scss" as *;
+
+#cocon{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    padding: 10px 20px;
+    text-align: center;
+    z-index: 999;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cookieConsentContent{
+    display: inline;
+}
+
+#cookieConsentContent p{
+    display: inline;
+}
+
+#cookieConsentButton{
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+#cookieNotConsentButton{
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+
+#cocon[consent], #cocon[noconsent]{
+    transition: transform 0.5s, $DEFAULT_TRANSITION;
+    transform-origin: bottom;
+    transform: translateY(100%);
+}
+
+.dark{
+    #cookieConsentButton{
+        background-color: rgba(10, 255, 10, 0.2);
+        color: #fff;
+        border: 2px solid #fff;
+    }
+
+    #cookieNotConsentButton{
+        color: #fff;
+        background-color: rgba(255, 10, 10, 0.2);
+        border: 2px solid #fff;
+    }
+    
+    #cookieConsentButton:hover{
+        background-color: rgba(10, 255, 10, 0.5);
+    }
+
+    #cookieNotConsentButton:hover{
+        background-color: rgba(255, 10, 10, 0.5);
+    }
+
+    #cocon{
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+}
+
+.light{
+    #cookieConsentButton{
+        background-color: rgba(0, 255, 0, 0.4);
+        color: #000;
+        border: 2px solid #000;
+    }
+
+    #cookieNotConsentButton{
+        color: #000;
+        background-color: rgba(255, 0, 0, 0.2);
+        border: 2px solid #000;
+    }
+
+    #cookieConsentButton:hover{
+        background-color: rgba(0, 255, 0, 0.5);
+    }
+
+    #cookieNotConsentButton:hover{
+        background-color: rgba(255, 0, 0, 0.5);
+    }
+
+    #cocon{
+        color: #000;
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+}
