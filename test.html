@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="dark">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Page Title</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+    </head>
+    <body>
+        <div class="test">
+            <div class="nested"></div>
+        </div>
+        <style>
+            
+            body, html{
+                width: 100%;
+                height: 100%;
+            }
+
+            .nested{
+                width: 50%;
+                height: 50%;
+            }
+
+            .test {
+                width: 100px;
+                height: 100px;
+            }
+            .dark .test {
+                background-color: black;
+            }
+
+            .light .test {
+                background-color: white;
+            }
+
+            .test{
+                .dark .nested {
+                    background-color: red;
+                }
+
+                .light .nested {
+                    background-color: blue;
+                }
+            }
+
+        </style>
+    </body>
+</html>

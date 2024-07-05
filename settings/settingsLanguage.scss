@@ -1,0 +1,72 @@
+@use "../Variables" as *;
+
+.toggle{  
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    box-sizing: border-box;
+    user-select: none;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.toggle .data{  
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.toggle .data .langName{  
+    display: flex;
+    margin-left: 4%;
+    font-size: 20px;
+    width: 100%;
+    text-align: start;
+    align-items: center;
+}
+
+.toggle .data .local{    
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.toggle .data .local .localName{  
+    font-size: 15px;
+    margin-right: 4%;
+}
+
+.toggle .data .local img{  
+    height: 25px;
+    border-radius: 5px;
+}
+
+.dark{
+    .toggle{
+        background-color: $gray-700;
+    }
+
+    language-toggle-element[toggled] .toggle{
+        background-color: $gray-600;
+    }
+
+    .toggle:hover{  
+        background-color: $gray-600;
+    }
+}
+
+.light{
+    .toggle{
+        background-color: $gray-300;
+    }
+
+    language-toggle-element[toggled] .toggle{
+        background-color: $gray-400;
+    }
+
+    .toggle:hover{  
+        background-color: $gray-400;
+    }
+}

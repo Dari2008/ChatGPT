@@ -1,0 +1,426 @@
+@use "./Variables.scss" as *;
+
+//darkMode diese datei mit alt alle selectors und klammnern makieren und die farben CTRL + c dann alle farben markieren und CTRL + X dann .dark und .light insgesamt immer 1000 der $gray-?
+
+#promptBar[uploadable] #uploadImage{
+    transition: left 0.3s, $DEFAULT_TRANSITION;
+    font-size: 25px;  
+    border-radius: 0.5rem;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    left: 1rem;
+    bottom: min(30px, 50%);
+    transform: translateY(min(30px, 50%));
+    z-index: 1;
+    -webkit-appearance: button;
+    background-color: transparent;
+    background-image: none;
+    text-transform: none;  
+    font-family: inherit;  
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+#uploadImage:hover{
+    transform: translateY(min(30px, 50%)) scale(1.2) !important;
+    transform-origin: center center;
+}
+
+#promptBar:not([uploadable]) #uploadImage{
+    display: none;
+}
+
+#promptBar[open][uploadable] #uploadImage{
+    transition: left 0.3s, $DEFAULT_TRANSITION;
+    left: calc(280px);
+}
+
+#promptBar[uploaded][uploadable] #promptArea{
+    padding-left: calc(60px + 10px + 40px);
+}
+
+#promptBar[uploaded][uploadable] #uploadedImage{
+    display: block;
+    width: 40px;
+    height: 40px;
+    transition: left 0.3s, $DEFAULT_TRANSITION;
+    font-size: 25px;  
+    border-radius: 0.5rem;
+    position: absolute;
+    left: calc(1rem + 40px + 10px);
+    bottom: min(30px, 50%);
+    transform: translateY(min(30px, 50%));
+    z-index: 1;
+}
+
+#promptBar[uploaded][open][uploadable] #uploadedImage{
+    transition: left 0.3s, $DEFAULT_TRANSITION;
+    left: calc(280px + 40px + 10px);
+}
+
+#promptBar:not([uploaded]) #uploadedImage{
+    display: none;
+}
+
+#uploadedImage:hover{
+    transform: translateY(min(30px, 50%)) scale(1.4) !important;
+    transform-origin: center center;
+}
+
+#promptBar[uploadable] #promptArea{
+    padding-left: 60px;
+}
+
+#imageEditor{
+    width: 80%;
+    height: 90%;
+    border-radius: 1rem;
+    padding: 20px;
+    overflow: hidden;
+}
+
+#closeImageEditor{
+    transition: left 0.3s, $DEFAULT_TRANSITION;
+    font-size: 25px;  
+    border-radius: 0.5rem;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 1;
+    padding: 5px;
+    background-color: transparent;
+}
+
+#imageEditorContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: auto;
+    margin-top: 30px;
+}
+
+#sourceImage{
+    object-fit: contain;
+    border-radius: 0.5rem;
+    aspect-ratio: 1/1 !important;
+    max-width: 55% !important;
+}
+
+#mask{
+    position: absolute;
+    background-color: transparent;
+    z-index: 2;
+    aspect-ratio: 1/1 !important;
+    max-width: 55% !important;
+    height: auto !important;
+}
+
+#imageEditorTitle{
+    font-size: 3rem;
+    margin: 0;
+    text-align: center;
+}
+
+#imageEditorActions{  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    flex-direction: row;
+    width: 150px;
+    padding: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 1rem;
+}
+
+#imageEditorActions button{
+    border-radius: 0.5rem;
+    padding: 5px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+#settings{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    flex-direction: column;
+    width: auto;
+    padding: 20px;
+    border-radius: 1rem;
+    height: auto;
+}
+
+#settings *{
+    margin-top: 10px;
+    width: 100%;
+}
+
+#settings button{
+    border-radius: 0.5rem;
+    padding: 5px;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+
+#settings input[type="number"]{
+    border-radius: 0.5rem;
+    padding: 5px;
+    font-size: 1rem;
+    border: none;
+    outline: none;  
+    width: 78%;
+    box-shadow: none;
+}
+
+#settings input[type="number"]:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+#settings #sizeOfAffect{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+#settings #sizeOfAffect label{
+    width: auto;
+    margin-right: 20px;
+}
+
+.attachmentBtn{
+    width: 40px;
+    height: 40px;
+    border-radius: .5rem;
+    margin-right: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    background-color: transparent;
+}
+
+.modal{
+    overflow: hidden;
+    border-radius: 1rem;
+    padding: 35px;
+}
+
+.attachmentImg{ 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.attachmentImage{  
+    object-fit: contain;
+    border-radius: 1.5rem;
+    height: calc(100% - 10px) !important;
+    max-width: 100% !important;
+}
+
+.closeBtn{  
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    font-size: 30px;
+}
+
+.showAttachmentDialog{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    height: 90%;
+    aspect-ratio: 1/1;
+}
+
+#imageEditorDialog{
+    width: 90%;
+    padding: 30px;
+    border-radius: 1.5rem;
+}
+
+.dark{
+    #promptBar[uploadable] #uploadImage{
+        color: $white;
+    }
+    #promptBar[uploaded][uploadable] #uploadedImage{
+        color: $white;
+    }
+    #imageEditor{
+        background-color: $gray-500;
+    }
+    #closeImageEditor{
+        color: darken($white, 30%);
+    }
+    #closImageEditor:hover{
+        color: $white;
+    }
+    #closImageEditor:active{
+        color: darken($white, 50%);
+    }
+    #imageEditorTitle{
+        color: $white;
+    }
+    #imageEditorActions{  
+        background-color: $gray-600;
+    }
+    #imageEditorActions button{
+        background-color: $gray-600;
+        color: $white;
+    }
+    #imageEditorActions button:hover{
+        background-color: $gray-700;
+    }
+    #imageEditorActions button:active{
+        background-color: $gray-800;
+    }
+    #settings{
+        background-color: $gray-600;
+        color: $white;
+    }
+    #settings button{
+        background-color: $gray-600;
+        color: $white;
+    }
+    #settings button:hover{
+        background-color: $gray-700;
+    }
+    #settings button:active{
+        background-color: $gray-800;
+    }
+    #settings input[type="number"]{
+        background-color: $gray-700;
+        color: $white;
+    }
+    #settings input[type="number"]:focus{
+        background-color: $gray-800;
+        border-color: $black;
+    }
+    .attachmentBtn:hover{
+        background-color: $gray-600;
+    }
+    .modal{
+        background-color: $gray-500;
+    }
+    .closeBtn{  
+        color: $white;
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+    .closeBtn:hover{
+        color: darken($white, 30%) !important;
+    }
+    .closeBtn:active{
+        color: darken($white, 50%) !important;
+    }
+    #imageEditorDialog{
+        background-color: $gray-900;
+    }    
+}
+
+
+.light{
+    #promptBar[uploadable] #uploadImage{
+        color: $black;
+    }
+    #promptBar[uploaded][uploadable] #uploadedImage{
+        color: $black;
+    }
+    #imageEditor{
+        background-color: $gray-500;
+    }
+    #closeImageEditor{
+        color: lighten($black, 30%);
+    }
+    #closImageEditor:hover{
+        color: $black;
+    }
+    #closImageEditor:active{
+        color: lighten($black, 50%);
+    }
+    #imageEditorTitle{
+        color: $black;
+    }
+    #imageEditorActions{  
+        background-color: $gray-400;
+    }
+    #imageEditorActions button{
+        background-color: $gray-400;
+        color: $black;
+    }
+    #imageEditorActions button:hover{
+        background-color: $gray-300;
+    }
+    #imageEditorActions button:active{
+        background-color: $gray-200;
+    }
+    #settings{
+        background-color: $gray-400;
+        color: $black;
+    }
+    #settings button{
+        background-color: $gray-400;
+        color: $black;
+    }
+    #settings button:hover{
+        background-color: $gray-300;
+    }
+    #settings button:active{
+        background-color: $gray-200;
+    }
+    #settings input[type="number"]{
+        background-color: $gray-700;
+        color: $white;
+    }
+    #settings input[type="number"]:focus{
+        background-color: $gray-200;
+        border-color: $white;
+    }
+    .attachmentBtn:hover{
+        background-color: $gray-400;
+    }
+    .modal{
+        background-color: $gray-500;
+    }
+    .closeBtn{  
+        color: $black;
+        background-color: rgba(0, 0, 0, 0) !important;
+    }
+    .closeBtn:hover{
+        color: darken($black, 30%) !important;
+    }
+    .closeBtn:active{
+        color: lighten($black, 50%) !important;
+    }
+    #imageEditorDialog{
+        background-color: $gray-100;
+    }    
+}

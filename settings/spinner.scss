@@ -1,0 +1,224 @@
+@use "../Variables.scss" as *;
+
+.spinnerInput{
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 12rem;
+    max-width: 12rem;
+    justify-content: center;
+    border-collapse: collapse;
+    height: 50px;
+}
+
+$actionColorDark: white;
+$actionSize: 10px;
+$spinnerFieldColorDark: $gray-800;
+$actionButtonBgColorDark: $gray-200;
+$actionButtonBgHoverColorDark: $gray-300;
+$actionButtonBgActiveColorDark: $gray-400;
+$border-colorDark: $gray-600;
+
+$actionColorLight: $black;
+$spinnerFieldColorLight: $gray-200;
+$actionButtonBgColorLight: $gray-800;
+$actionButtonBgHoverColorLight: $gray-700;
+$actionButtonBgActiveColorLight: $gray-600;
+$border-colorLight: $gray-400;
+
+.decrease div{
+    width: $actionSize;
+    height: 2px;
+    opacity: 0.5;
+    border-radius: 80px;
+}
+
+.inputFieldForSpinner{
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 1.2rem !important;
+    line-height: 1.25rem !important;
+    font-weight: 500 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    padding: .5rem .75rem !important;
+    box-sizing: border-box !important;
+    padding-bottom: 30px !important;
+    text-align: center !important;
+}
+
+.inputFielInfo{
+    position: absolute;
+    font-size: .75rem;
+    line-height: 1rem;
+    align-items: center;
+    display: flex;
+    bottom: 0.2rem;
+}
+
+.inputFielInfo svg{  
+    width: 15px;
+    height: auto;
+    margin-right: 3px;
+    opacity: 0.5;
+}
+
+.increase, .decrease{
+    outline: none;
+    box-shadow: none;
+    height: 100%;
+    background-image: none;
+    cursor: pointer;
+    text-transform: none;
+    font-feature-settings: inherit;
+    color: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    font-variation-settings: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.increase{
+    border-top-right-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+}
+
+.decrease{
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
+.increase div{
+    position: relative;
+}
+
+.increase div:after{
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: $actionSize;
+    opacity: 0.5;
+    border-radius: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.increase div:before{
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: $actionSize;
+    opacity: 0.5;
+    border-radius: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.dark{
+    .increase{
+        border-right: 2px solid $border-colorDark !important;
+        border-top: 2px solid $border-colorDark !important;
+        border-bottom: 2px solid $border-colorDark !important;
+    }
+    .decrease{
+        border-left: 2px solid $border-colorDark !important;
+        border-top: 2px solid $border-colorDark !important;
+        border-bottom: 2px solid $border-colorDark !important;
+    }    
+
+    .increase div:before{
+        background-color: $actionColorDark;
+    }
+
+    .increase div:after{
+        background-color: $actionColorDark;
+    }
+
+    .decrease div{
+        background-color: $actionColorDark;
+    }
+
+    .inputFieldForSpinner{
+        color: $white !important;
+        background-color: $spinnerFieldColorDark !important;
+        border: 2px solid $border-colorDark !important;
+    }
+
+    .inputFielInfo svg{
+        color: $spinnerFieldColorDark;
+        background-color: $white;
+    }
+
+    .increase:hover, .decrease:hover{
+        background-color: $gray-700;
+    }
+    
+    .increase:active, .decrease:active{
+        background-color: $gray-900;
+    }
+
+    .increase, .decrease{
+        background-color: $spinnerFieldColorDark;
+    }
+}
+
+.light{
+    
+    .increase{
+        border-right: 2px solid $border-colorLight !important;
+        border-top: 2px solid $border-colorLight !important;
+        border-bottom: 2px solid $border-colorLight !important;
+    }
+    .decrease{
+        border-left: 2px solid $border-colorLight !important;
+        border-top: 2px solid $border-colorLight !important;
+        border-bottom: 2px solid $border-colorLight !important;
+    }
+
+    .increase div:before{
+        background-color: $actionColorLight;
+    }
+
+    .increase div:after{
+        background-color: $actionColorLight;
+    }
+
+    .decrease div{
+        background-color: $actionColorLight;
+    }
+
+    .inputFieldForSpinner{
+        color: $black !important;
+        background-color: $spinnerFieldColorLight !important;
+        border: 2px solid $border-colorLight !important;
+    }
+
+    .inputFielInfo svg{
+        color: $spinnerFieldColorLight;
+        background-color: $black;
+    }
+
+    .increase:hover, .decrease:hover{
+        background-color: $gray-300;
+    }
+    
+    .increase:active, .decrease:active{
+        background-color: $gray-100;
+    }
+
+    .increase, .decrease{
+        background-color: $spinnerFieldColorLight;
+    }
+}

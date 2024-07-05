@@ -1,0 +1,395 @@
+html, body, dialog {
+  background-color: #212121;
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+button {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.centerAll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+dialog::backdrop {
+  background-color: #212121;
+  opacity: 0.5 !important;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.close:hover {
+  color: #b4b4b4 !important;
+  background-color: transparent !important;
+  font-weight: bolder !important;
+  transition: rotate 0.3s !important;
+  transform: scale(1.2) rotate(90deg);
+}
+
+.close:not(:hover) {
+  transform: scale(1) rotate(0deg);
+}
+
+.close:active {
+  transform: scale(1.3) rotate(0deg);
+}
+
+* {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+#settingsDialog {
+  width: 100%;
+  height: 100%;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  background-color: #212121;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  z-index: 1000;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+#settingsDialog:not([show]) {
+  display: none;
+}
+
+#settingsDialog[show] {
+  display: grid;
+}
+
+#closeSettings {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  color: white;
+  background-color: transparent !important;
+  margin: 0px;
+  padding: 0px;
+  z-index: 10000;
+}
+
+#closeSettings:hover {
+  color: #424242;
+}
+
+#closeSettings:active {
+  color: #171717;
+}
+
+#settingsList {
+  grid-area: 1/1/2/2;
+  background-color: #171717;
+  border-right: 1px solid #2f2f2f;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 100%;
+}
+
+#settingsList button[selected] {
+  background-color: #212121;
+  color: #fff;
+  position: relative;
+  padding: 10px;
+  height: 50px;
+}
+
+#settingsList button[selected]:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: -20px;
+  right: -1px;
+  border-top-right-radius: 25px;
+  background-color: transparent;
+  box-shadow: 7px -7px 0px 7px #212121;
+  z-index: 100;
+}
+
+#settingsList button[selected]:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: -20px;
+  right: -1px;
+  border-bottom-right-radius: 25px;
+  background-color: transparent;
+  box-shadow: 7px 7px 0px 7px #212121;
+  z-index: 100;
+}
+
+#settingsList button[selected] .borderRemover {
+  width: 2px;
+  background-color: #212121;
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  height: 100%;
+  z-index: 100;
+}
+
+#settingsList button {
+  background-color: #171717;
+  color: white;
+  position: relative;
+  padding: 10px;
+  height: 50px;
+}
+
+#settingsList button:hover {
+  background-color: #212121;
+}
+
+#settingsList button:active {
+  background-color: #2f2f2f;
+}
+
+#contents {
+  grid-area: 1/2/2/3;
+  background-color: #212121;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border-collapse: collapse;
+}
+
+.settings-element {
+  height: auto;
+  min-height: 100px;
+  display: grid;
+  grid-template-columns: auto 14rem;
+  grid-template-rows: repeat(3, auto);
+  grid-row-gap: 0px;
+  -o-border-image: linear-gradient(90deg, #212121 0%, #2f2f2f 33%, #2f2f2f 66%, #212121 100%) 1;
+     border-image: linear-gradient(90deg, #212121 0%, #2f2f2f 33%, #2f2f2f 66%, #212121 100%) 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -moz-column-gap: 15%;
+       column-gap: 15%;
+  box-sizing: border-box;
+}
+
+.settings-element[disabled] {
+  opacity: 0.25 !important;
+}
+
+.settings-element:first-child {
+  border-bottom: 2px solid #2f2f2f;
+}
+
+.settings-element:not(:first-child):not(:last-child) {
+  border-top: 2px solid #2f2f2f;
+  border-bottom: 2px solid #2f2f2f;
+}
+
+.settings-element:last-child {
+  border-top: 2px solid #2f2f2f;
+}
+
+.settings-title {
+  grid-area: 1/1/2/3;
+  color: white;
+  font-size: 14px;
+  padding: 10px;
+  opacity: 0.6;
+}
+
+.settings-label {
+  grid-area: 2/1/3/2;
+  color: white;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.settings-input {
+  grid-area: 1/2/4/3;
+  padding-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-description {
+  grid-area: 3/1/4/3;
+  color: white;
+  opacity: 0.45;
+  text-align: start;
+  padding-left: 10px;
+  font-size: 13px;
+}
+
+.switch {
+  /* switch */
+  --switch-width: 46px;
+  --switch-height: 24px;
+  --switch-bg: rgb(131, 131, 131);
+  --switch-checked-bg: rgb(0, 218, 80);
+  --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
+  --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+  /* circle */
+  --circle-diameter: 18px;
+  --circle-bg: #fff;
+  --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
+  --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
+  --circle-transition: var(--switch-transition);
+  /* icon */
+  --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+  --icon-cross-color: var(--switch-bg);
+  --icon-cross-size: 6px;
+  --icon-checkmark-color: var(--switch-checked-bg);
+  --icon-checkmark-size: 10px;
+  /* effect line */
+  --effect-width: calc(var(--circle-diameter) / 2);
+  --effect-height: calc(var(--effect-width) / 2 - 1px);
+  --effect-bg: var(--circle-bg);
+  --effect-border-radius: 1px;
+  --effect-transition: all .2s ease-in-out;
+}
+
+.switch input {
+  display: none;
+}
+
+.switch {
+  display: inline-block;
+}
+
+.switch svg {
+  transition: var(--icon-transition);
+  position: absolute;
+  height: auto;
+}
+
+.switch .checkmark {
+  width: var(--icon-checkmark-size);
+  color: var(--icon-checkmark-color);
+  transform: scale(0);
+}
+
+.switch .cross {
+  width: var(--icon-cross-size);
+  color: var(--icon-cross-color);
+}
+
+.slider {
+  box-sizing: border-box;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--switch-bg);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: var(--switch-transition);
+  cursor: pointer;
+}
+
+.circle {
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  background: var(--circle-bg);
+  border-radius: inherit;
+  box-shadow: var(--circle-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--circle-transition);
+  z-index: 1;
+  position: absolute;
+  left: var(--switch-offset);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  width: var(--effect-width);
+  height: var(--effect-height);
+  left: calc(var(--switch-offset) + var(--effect-width) / 2);
+  background: var(--effect-bg);
+  border-radius: var(--effect-border-radius);
+  transition: var(--effect-transition);
+}
+
+/* actions */
+.switch input:checked + .slider {
+  background: var(--switch-checked-bg);
+}
+
+.switch input:checked + .slider .checkmark {
+  transform: scale(1);
+}
+
+.switch input:checked + .slider .cross {
+  transform: scale(0);
+}
+
+.switch input:checked + .slider::before {
+  left: calc(100% - var(--effect-width) - var(--effect-width) / 2 - var(--switch-offset));
+}
+
+.switch input:checked + .slider .circle {
+  left: calc(100% - var(--circle-diameter) - var(--switch-offset));
+  box-shadow: var(--circle-checked-shadow);
+}
+
+.overflow {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  width: auto;
+}
+
+.settings-title-element {
+  padding: 10px;
+  color: white;
+  opacity: 0.9;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+body[lang=de_DE] #touapp a,
+body[lang=da_DK] #touapp a,
+body[lang=fr_FR] #touapp a,
+body[lang=es_ES] #touapp a {
+  line-break: anywhere;
+  text-align: center;
+  font-size: 0.7rem;
+}/*# sourceMappingURL=settings.css.map */

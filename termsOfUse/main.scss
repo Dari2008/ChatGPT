@@ -1,0 +1,30 @@
+@use "../Variables.scss" as *;
+
+html{
+    overflow-y: scroll !important;
+}
+
+h2{
+    text-decoration: underline;
+}
+
+h1{
+    color: $white;
+    text-align: center;
+}
+
+body{
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.topics{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+ul, li{
+    color: $white;
+}

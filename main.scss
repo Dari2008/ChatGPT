@@ -1,0 +1,1140 @@
+@use "./Variables.scss" as *;
+
+$textAreaHeight: 60px;
+
+html{
+    overflow: hidden;
+}
+
+#sideMenu{
+    width: 260px;
+    height: calc(100% - 70px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    overflow-y: auto;
+    transition: 0.3s, $DEFAULT_TRANSITION;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+#frame{
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    width: calc(100% - 260px);
+    height: auto;
+    position: fixed;
+    top: 0;
+    right: 0px;
+}
+
+#promptBar{
+    transition: width 0.3s, $DEFAULT_TRANSITION;
+    position: fixed;
+    bottom: 2rem;
+    z-index: 50;
+    display: flex;
+    align-content: center;  
+    width: calc(100% - 20px);
+    flex-direction: column;
+    height: $textAreaHeight;
+    min-height: $textAreaHeight;
+    overflow: hidden;
+}
+
+#content{
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    transition-property: margin-left;
+    transition-duration: 0.3s;
+    margin-left: 0px;
+    overflow-x: hidden;
+}
+
+#content[open]{
+    width: calc(100% - 20px - 260px);
+    display: flex;
+    flex-direction: column;
+    transition-property: margin-left;
+    transition-duration: 0.3s;
+    margin-left: calc(20px + 260px);
+    overflow-x: hidden;
+}
+
+#promptArea{
+    animation: expandIn 0.1s linear 0ms 1 forwards;
+    transition: width 0.2s, $DEFAULT_TRANSITION;
+    background-color: transparent;
+    color: $white;
+    padding: 1rem 1rem 1rem 1rem;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    resize: none;
+    outline: none;
+    min-height: $textAreaHeight;
+    overflow-y: auto;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+    position: fixed;
+    bottom: 2rem;
+    width: calc(100% - 20px);
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: column;
+    appearance: none;
+    line-height: 1.5rem;
+    margin: 0;
+    text-shadow: none !important;
+}
+
+#promptArea.focused{
+    animation: expandOut 0.1s linear 0ms 1 forwards;
+    transition: width 0.3s, $DEFAULT_TRANSITION;
+    height: 80%;
+}
+
+@keyframes expandIn {
+    0%{
+        height: 80%;
+    }
+    100%{
+        height: $textAreaHeight;
+    }
+}
+@keyframes expandOut {
+    0%{
+        height: $textAreaHeight;
+    }
+    100%{
+        height: 80%;
+    }
+}
+
+#promptArea:not(.focused){
+    transition: height 0.4s, $DEFAULT_TRANSITION;
+    height: $textAreaHeight;
+}
+
+#promptBar[open] #promptArea{
+    transition-property: width, height;
+    transition-duration: 0.2s;
+    width: calc(100% - 20px - 260px);
+    right: 10px !important;  
+    transform: none;
+    left: auto;
+}
+
+#promptArea::placeholder{
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+}
+
+#promptArea:focus{
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+#sendBtn{
+
+    border-radius: .5rem;
+
+    width: 30px;
+    height: 30px;  
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    right: 1rem;
+    bottom: min($textAreaHeight/2, 50%);
+
+    transform: translateY(min($textAreaHeight/2, 50%));
+
+}
+
+#sendBtn svg{
+}
+
+#sendBtn:hover{
+}
+
+#sendBtn:active{
+}
+
+#sendBtn[disabled]{
+    cursor: not-allowed;
+}
+
+#newChat{
+    width: calc(100% - 60px);
+    height: 50px;
+    position: sticky;
+    top: 0px;
+    background-color: transparent;
+    border: none;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+    border-radius: 10px;
+}
+
+#newChat:hover{
+    border-radius: 10px;
+}
+
+#newChat:active{
+    transform: scale($NEW_CHAT_BTN_CLICK_SCALE);
+    border-radius: 10px;
+}
+
+#chats{
+    width: 100%;
+    height: 100%;
+}
+
+.chatBtn{ 
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.chatBtn:hover{
+    border-radius: 10px;
+}
+
+.chatBtn span{
+    margin-left: 10px;
+}
+
+.optionsBtn{
+    background-color: transparent;
+    border: none;
+    color: transparent;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+    border-radius: 100%;
+    text-align: center;  
+    margin-left: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.chatBtn[selected]{
+    border-radius: 10px;
+}
+
+#content{
+    margin-top: 70px;
+    height: fit-content;
+}
+
+#overflowFrame{
+    overflow-y: auto;
+    height: calc(100% - 120px - 70px);
+    margin-top: 70px;
+    overflow-x: hidden;
+}
+
+.msgHeader{  
+    display: flex;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;  
+    margin-bottom: 15px;
+}
+
+.msgRole, .msgHeader{
+    font-family: "Roboto";
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.profileImage{  
+    width: 30px;
+    border-radius: 100%;  
+    margin-right: 15px;
+    
+}
+
+.message.user{
+    margin-top: 60px;
+}
+
+.message.gpt{  
+    margin-top: 35px;
+}
+
+.msgContent{
+
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 1rem;
+    word-wrap: break-word;
+
+    user-select: text !important;
+}
+
+.msgContent p{
+    user-select: text !important;
+}
+
+.topCodeDiv{
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.copyCodeBtn{
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 1rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.topCodeDiv span{
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 100%;
+    margin-left: 10px;
+}
+
+.copyCodeBtn img{
+    margin-right: 10px;
+    height: 80%;
+}
+
+.codeDiv{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.doppelPunktBefore{
+    margin-bottom: 10px;
+}
+
+.doppelPunktAfter{
+    margin-left: 20px;
+}
+
+.codeDiv pre{
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 1rem;
+    white-space: pre-wrap;
+}
+
+.distanceDiv code{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.distanceDiv pre{
+    width: 100%;
+    height: 100%;
+}
+
+b{
+    font-weight: 800 !important;
+}
+
+#options{
+    width: 250px;
+    position: absolute;
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 100;
+    transform: translateX(80%) translateY(10px);
+}
+
+#options button{
+    width: 100%;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 20px;
+    font-style: normal;
+    border-radius: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#options button:hover{
+    border-radius: 10px;
+}
+
+.link{
+    cursor: pointer;
+}
+
+.unsafelink{
+    cursor: pointer;
+}
+
+span[contenteditable]{
+    cursor: text !important;
+    outline: none;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+}
+
+#model{
+    position: fixed;
+    width: 800px;
+    height: 50px;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    outline: none !important;
+    border: none !important;
+    box-shadow: none;
+    margin-left: 20px;
+    font-family: "Roboto";
+    font-weight: 350;
+    font-size: 15px;
+    font-style: normal;
+    cursor: pointer;
+    user-select: none;
+}
+
+#model:not([open]){
+    height: auto;
+}
+
+#currentSelectedDiv::after{
+    content: "▼";
+    float: right;
+    font-family: "Roboto";
+    font-weight: 200;
+    font-size: 15px;
+    font-style: normal;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform-origin: center;
+    animation: rotateDropDown 0.2s linear 0ms 1 forwards;
+}
+
+#model[open] #currentSelectedDiv::after{
+    transform-origin: center;
+    animation: rotateDropUp 0.2s linear 0ms 1 forwards;
+}
+
+@keyframes rotateDropUp {
+    0%{
+        --rotation: 90deg;
+        transform: translateY(-50%) rotate(var(--rotation));
+    }
+    100%{
+        --rotation: 0deg;
+        transform: translateY(-50%) rotate(var(--rotation));
+    }
+}
+
+@keyframes rotateDropDown {
+    0%{
+        --rotation: 0deg;
+        transform: translateY(-50%) rotate(var(--rotation));
+    }
+    100%{
+        --rotation: 90deg;
+        transform: translateY(-50%) rotate(var(--rotation));
+    }
+}
+
+#currentSelectedDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    border-bottom-left-radius: 10px;
+}
+
+#customDropDown{
+    display: none;
+    padding: 10px;
+    padding-bottom: 30px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#customDropDown .optGroupLabel{
+    text-align: center;
+}
+
+#customDropDown .option{
+    text-align: start;
+}
+
+#model:not([selected]){
+    margin-left: 20px;
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 20px;
+    font-style: normal;
+    text-align: center;
+}
+
+#pricingOpenAi{
+    float: right;
+    padding-right: 10px;
+    font-family: "Roboto";
+    font-weight: 200;
+    font-size: 15px;
+    font-style: normal;
+}
+
+.option{
+    padding-left: 20px;
+
+    font-family: "Roboto";
+    font-weight: 350;
+    font-size: 15px;
+    font-style: normal;
+    
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.option:hover{
+    border-radius: 10px;
+}
+
+.option:active{
+    border-radius: 10px;
+}
+
+.option[selected]{
+    border-radius: 10px;
+}
+
+.optGroupLabel{
+    font-family: "Roboto";
+    font-weight: 500;
+    font-size: 20px;
+    font-style: normal;
+    display: block;
+}
+
+.nameOfModel{
+    grid-area: 1 / 1 / 2 / 2;
+}
+
+//Big Screen
+@media (width >= 600px){
+    .tokens{
+        grid-area: 1 / 2 / 2 / 3;
+        margin-left: 10px;
+    }
+
+    .priceInput{
+        grid-area: 1 / 3 / 2 / 4;
+    }
+
+    .priceOutput{
+        grid-area: 1 / 4 / 2 / 5;
+    }
+
+    .priceOverAll{
+        grid-area: 1 / 3 / 2 / 5;
+    }
+
+    .priceOverAllSmallDevices{
+        display: none;
+    }
+
+    #model{
+        max-width: 500px;
+        min-width: fit-content;
+        width: auto;
+        height: 500px;
+    }
+
+    #currentSelectedDiv{
+        padding-right: 30px;
+    }
+
+}
+
+@media (width < 600px){
+    .tokens{
+        display: none;
+    }
+
+    .priceInput{
+        display: none;
+    }
+
+    .priceOutput{
+        display: none;
+    }
+
+    .priceOverAll{
+        display: none;
+    }
+
+    .priceOverAllSmallDevices{
+        grid-area: 1 / 3 / 2 / 5;
+        text-align: center;
+    }
+
+    .nameOfModel{
+        grid-area: 1 / 1 / 2 / 3;
+    }
+
+    #model{
+        max-width: 500px;
+        min-width: fit-content;
+        width: auto;
+        height: 500px;
+    }
+
+    .option[value="dall-e-2"], .option[value="dall-e-3"]{
+        .priceOverAll{
+            display: block;
+        }
+    }
+
+    #currentSelectedDiv{
+        .priceOverAllSmallDevices{
+            display: none;
+        }
+    }
+
+    #sideMenu[open]::after{
+        width: calc(100% - 260px);
+        transform-origin: right;
+        transform: scaleX(1);
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 260px;
+        content: "";
+        z-index: 50;
+        transition: transform 0.3s, $DEFAULT_TRANSITION;
+    }
+
+    #sideMenu:not([open])::after{
+        transform: scaleX(0);
+        transform-origin: right;
+        width: calc(100% - 260px);
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 260px;
+        content: "";
+        z-index: 50;
+        transition: transform 0.3s, $DEFAULT_TRANSITION;
+    }
+}
+
+#model[open]{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#currentSelectedDiv{
+    height: 50px;
+    position: sticky;
+    top: 0;
+}
+   
+    
+
+#warningImage[show]{
+    position: absolute;
+    color: red;
+    text-align: center;
+    font-family: "Roboto";
+    font-weight: 300;
+    font-size: 13px;
+    font-style: normal;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#warningImage:not([show]){
+    display: none;
+}
+
+.aiImage{
+    margin-top: 20px;
+    width: 65%;
+    height: auto;
+    border-radius: 10px;
+}
+.currentSelectedDiv{
+    background-color: transparent;
+}
+
+#menu[open]{
+    position: fixed;
+    top: 0px;
+    left: calc(var(--left) - 20px);
+    animation: MenuMoveOut 0.2s linear 0ms 1 forwards;
+    width: 50px;
+    height: 50px;
+    z-index: 102;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    transition: rotate 0.3s, $DEFAULT_TRANSITION;
+    rotate: 180deg;
+    border-radius: 10px;
+}
+
+#menu[open]:hover{
+}
+
+
+#menu:not([open]):hover{
+}
+
+#menu:not([open]){
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    animation: MenuMoveIn 0.2s linear 0ms 1 forwards;
+    width: 50px;
+    height: 50px;
+    z-index: 101;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    transition: rotate 0.3s, $DEFAULT_TRANSITION;
+    rotate: 0deg;
+    border-radius: 10px;
+}
+
+@keyframes MenuMoveOut {
+    0%{
+        left: 0px;
+    }
+    100%{
+        left: calc(var(--left) - 50px);
+    }
+}
+
+@keyframes MenuMoveIn {
+    0%{
+        left: calc(var(--left) - 50px);
+    }
+    100%{
+        left: 0px;
+    }
+}
+
+#centerGooglelogin{
+    align-items: end !important;
+}
+
+#sideMenu:not([open]){
+    transition: width 0.3s, $DEFAULT_TRANSITION;
+    width: 0px !important;
+    #centerGooglelogin{
+        opacity: 0;
+        transition: opacity 0.1s, $DEFAULT_TRANSITION;
+    }
+}
+
+#sideMenu{
+    transition: width 0.3s, $DEFAULT_TRANSITION;
+    #centerGooglelogin{
+        opacity: 1;
+        transition: opacity 0.1s, $DEFAULT_TRANSITION;
+    }
+}
+
+#tmp{
+    display: none;
+    position: fixed;
+}
+
+@media (max-width: 800px){
+    #tmp{
+        position: absolute;
+    } 
+}
+
+.dark{
+    #sideMenu{
+        background-color: $gray-900;
+        box-shadow: 46px -28px 50px -28px rgba(255, 255, 255, 0.02);
+    }
+    #promptBar{
+        background-color: $gray-800;
+    }
+    #promptArea{
+        color: $white;
+        border: 1px solid hsla(0,0%,70%,.15);
+        background-color: $gray-800;
+        box-shadow: 0px 0px 12px 3px rgba(255, 255, 255, 0.03);
+    }
+    #promptArea::placeholder{
+        color: hsla(0,0%,100%,.5);
+    }
+    #promptArea:focus{
+        border: 1px solid hsla(0,0%,100%,.5);
+        box-shadow: 0px 0px 12px 3px rgba(255, 255, 255, 0.18) !important;
+    }
+    #sendBtn{
+        background-color: $white;
+        color: $white;
+    }
+    #sendBtn svg{
+        color: $gray-900;
+    }
+    #sendBtn:hover{
+        background-color: $gray-600;
+    }
+    #sendBtn:active{
+        background-color: $gray-700;
+    }
+    #sendBtn[disabled]{
+        background-color: $DISABLED_SEND_BTN_DARK;
+    }
+    #newChat{
+        color: $white;
+        background-color: $gray-900;
+    }
+    #newChat:hover{
+        background-color: $gray-700;
+        color: $white;
+    }
+    #newChat:active{
+        background-color: $gray-800;
+        color: $white;
+    }
+    .chatBtn{ 
+        color: $white;
+    }
+    .chatBtn:hover{
+        background-color: $gray-800;
+        color: $white;
+    }
+    .chatBtn:hover > .optionsBtn{
+        color: $white;
+    }
+    .chatBtn[selected]{
+        background-color: $SELECTED_CHAT_COLOR;
+        color: $white;
+    }
+    #content{
+        color: $white;
+    }
+    .topCodeDiv{
+        background-color: $gray-700;
+        color: $gray-300;
+        border-bottom: 1px solid $gray-300;
+    }
+    #options{
+        background-color: $gray-700;
+    }
+    #options button{
+        color: $white;
+    }
+    #options button:hover{
+        background-color: $gray-800;
+        color: $white;
+    }
+    .link{
+        color: darken(lightblue, 20%);
+    }
+    .unsafelink{
+        color: #a66372;
+    }
+    #model{
+        background-color: $gray-800;
+        color: $white;
+    }
+    // #model[open]{
+    //     background-color: lighten($gray-800, 5%);
+    // }
+    #currentSelectedDiv:hover .option{
+        background-color: $gray-700;
+    }
+    #customDropDown{
+        background-color: lighten($gray-800, 5%);
+    }
+    #model:not([selected]){
+        color: $gray-300;
+    }
+    #pricingOpenAi{
+        color: lightblue !important;
+    }
+    .option{
+        color: $gray-300;
+    }
+    .option:hover{
+        background-color: $gray-800;
+        color: $white;
+    }
+    .option:active{
+        background-color: $gray-900;
+        color: $white;
+    }
+    .option[selected]{
+        background-color: lighten($gray-800, 10%);
+        color: $white;
+    }
+    .optGroupLabel{
+        color: $gray-300;
+    }
+    @media (width < 600px){
+        #sideMenu[open]::after{
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        #sideMenu:not([open])::after{
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    }
+    #currentSelectedDiv{
+        background-color: $gray-700;
+    }
+    #menu[open]{
+        background-color: $gray-900;
+        color: $white;
+    }
+    #menu[open]:hover{
+        background-color: $gray-700;
+    }
+    #menu:not([open]):hover{
+        background-color: $gray-700;
+    }
+    #menu:not([open]){
+        background-color: $gray-900;
+        color: $white;
+    }
+
+    .googleloginitemLightMode{
+        display: none;
+    }
+
+    .googleloginitemDarkMode{
+        display: block;
+    }
+}
+
+.light{
+
+    .googleloginitemLightMode{
+        display: block;
+    }
+
+    .googleloginitemDarkMode{
+        display: none;
+    }
+
+    #sideMenu{
+        background-color: $gray-200;
+        box-shadow: 46px -28px 50px -28px rgba(0,0,0,0.2);
+    }
+    #promptBar{
+        background-color: $gray-50;
+    }
+    #promptArea{
+        color: $black;
+        border: 1px solid hsla(0, 0%, 70%, 0.15);
+        background-color: $white;
+        box-shadow: 0px 0px 12px 3px rgba(0,0,0,0.2);
+    }
+    #promptArea::placeholder{
+        color: hsla(0,0%,0%,.5);
+    }
+    #promptArea:focus{
+        border: 1px solid hsla(0,0%,0%,.5);
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    }
+    #sendBtn{
+        background-color: $black;
+        color: $black;
+    }
+    #sendBtn svg{
+        color: $gray-100;
+    }
+    #sendBtn:hover{
+        background-color: $gray-400;
+    }
+    #sendBtn:active{
+        background-color: $gray-300;
+    }
+    #sendBtn[disabled]{
+        background-color: $DISABLED_SEND_BTN_LIGHT;
+    }
+    #newChat{
+        color: $black;
+        background-color: $gray-200;
+    }
+    #newChat:hover{
+        background-color: $gray-300;
+        color: $black;
+    }
+    #newChat:active{
+        background-color: $gray-200;
+        color: $black;
+    }
+    .chatBtn{ 
+        color: $black;
+    }
+    .chatBtn:hover{
+        background-color: $gray-200;
+        color: $black;
+    }
+    .chatBtn:hover > .optionsBtn{
+        color: $black;
+    }
+    .chatBtn[selected]{
+        background-color: $SELECTED_CHAT_COLOR;
+        color: $black;
+    }
+    #content{
+        color: $black;
+    }
+    .topCodeDiv{
+        background-color: $gray-300;
+        color: $gray-700;
+        border-bottom: 1px solid $gray-700;
+    }
+    #options{
+        background-color: $gray-300;
+    }
+    #options button{
+        color: $black;
+    }
+    #options button:hover{
+        background-color: $gray-200;
+        color: $black;
+    }
+    .link{
+        color: darken(lightblue, 20%);
+    }
+    .unsafelink{
+        color: #a66372;
+    }
+    #model{
+        background-color: $gray-50;
+        color: $black;
+        box-shadow: -1px 3px 17px rgba(0, 0, 0, 0.5);
+    }
+    // #model[open]{
+    //     background-color: lighten($gray-200, 5%);
+    // }
+    #currentSelectedDiv:hover .option{
+        background-color: $gray-50;
+    }
+    #customDropDown{
+        background-color: $gray-50;
+    }
+    #model:not([selected]){
+        color: $gray-700;
+    }
+    #pricingOpenAi{
+        color: lightblue !important;
+    }
+    .option{
+        color: $gray-700;
+    }
+    .option:hover{
+        background-color: $gray-200;
+        color: $black;
+    }
+    .option:active{
+        background-color: $gray-100;
+        color: $black;
+    }
+    .option[selected]{
+        background-color: darken($gray-200, 10%);
+        color: $black;
+    }
+    .optGroupLabel{
+        color: $gray-700;
+    }
+    @media (width < 600px){
+        #sideMenu[open]::after{
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        #sideMenu:not([open])::after{
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    }
+    #currentSelectedDiv{
+        background-color: $gray-50;
+    }
+    #menu[open]{
+        background-color: $gray-200;
+        color: $black;
+    }
+    #menu[open]:hover{
+        background-color: $gray-300;
+    }
+    #menu:not([open]):hover{
+        background-color: $gray-300;
+    }
+    #menu:not([open]){
+        background-color: $gray-100;
+        color: $black;
+    }
+}
+
+.dark{
+    *{
+        --green: lightgreen;
+        --yellow: yellow;
+        --red: red;
+    }
+}
+
+.light{
+    *{
+        --green: rgb(0, 117, 0);
+        --yellow: rgb(117, 117, 0);
+        --red: rgb(117, 0, 0);
+    }
+}

@@ -1,0 +1,513 @@
+html, body, dialog {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+.centerAll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close {
+  position: fixed;
+  top: 50px;
+  right: 50px;
+  color: #fff;
+  font-size: 17px;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transform-origin: center center;
+  transform: scale(1) rotate(0deg);
+}
+
+.close:hover {
+  background-color: transparent !important;
+  font-weight: bolder !important;
+  transition: transform 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s !important;
+  transform: scale(1.2) rotate(90deg);
+}
+
+.close:not(:hover) {
+  transform: scale(1) rotate(0deg);
+}
+
+.close:active {
+  transform: scale(1.3) rotate(0deg);
+}
+
+*::after, *::before, *::backdrop {
+  background-color: inherit;
+}
+
+*, *::after, *::before, *::backdrop {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
+
+iframe {
+  border: none !important;
+  outline: none !important;
+}
+
+.dark html, .dark body, .dark dialog {
+  background-color: #212121;
+}
+.dark dialog::backdrop {
+  background-color: #000;
+  opacity: 0.45;
+}
+.dark .close:hover {
+  color: #b4b4b4 !important;
+}
+
+.light html, .light body, .light dialog {
+  background-color: #f9f9f9;
+}
+.light dialog::backdrop {
+  background-color: #fff;
+  opacity: 0.45;
+}
+.light .close:hover {
+  color: #2f2f2f !important;
+}
+
+#promptBar[uploadable] #uploadImage {
+  transition: left 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  font-size: 25px;
+  border-radius: 0.5rem;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 1rem;
+  bottom: min(30px, 50%);
+  transform: translateY(min(30px, 50%));
+  z-index: 1;
+  -webkit-appearance: button;
+  background-color: transparent;
+  background-image: none;
+  text-transform: none;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+#uploadImage:hover {
+  transform: translateY(min(30px, 50%)) scale(1.2) !important;
+  transform-origin: center center;
+}
+
+#promptBar:not([uploadable]) #uploadImage {
+  display: none;
+}
+
+#promptBar[open][uploadable] #uploadImage {
+  transition: left 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  left: 280px;
+}
+
+#promptBar[uploaded][uploadable] #promptArea {
+  padding-left: 110px;
+}
+
+#promptBar[uploaded][uploadable] #uploadedImage {
+  display: block;
+  width: 40px;
+  height: 40px;
+  transition: left 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  font-size: 25px;
+  border-radius: 0.5rem;
+  position: absolute;
+  left: calc(1rem + 40px + 10px);
+  bottom: min(30px, 50%);
+  transform: translateY(min(30px, 50%));
+  z-index: 1;
+}
+
+#promptBar[uploaded][open][uploadable] #uploadedImage {
+  transition: left 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  left: 330px;
+}
+
+#promptBar:not([uploaded]) #uploadedImage {
+  display: none;
+}
+
+#uploadedImage:hover {
+  transform: translateY(min(30px, 50%)) scale(1.4) !important;
+  transform-origin: center center;
+}
+
+#promptBar[uploadable] #promptArea {
+  padding-left: 60px;
+}
+
+#imageEditor {
+  width: 80%;
+  height: 90%;
+  border-radius: 1rem;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#closeImageEditor {
+  transition: left 0.3s, background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  font-size: 25px;
+  border-radius: 0.5rem;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  z-index: 1;
+  padding: 5px;
+  background-color: transparent;
+}
+
+#imageEditorContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: auto;
+  margin-top: 30px;
+}
+
+#sourceImage {
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 0.5rem;
+  aspect-ratio: 1/1 !important;
+  max-width: 55% !important;
+}
+
+#mask {
+  position: absolute;
+  background-color: transparent;
+  z-index: 2;
+  aspect-ratio: 1/1 !important;
+  max-width: 55% !important;
+  height: auto !important;
+}
+
+#imageEditorTitle {
+  font-size: 3rem;
+  margin: 0;
+  text-align: center;
+}
+
+#imageEditorActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  flex-direction: row;
+  width: 150px;
+  padding: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 1rem;
+}
+
+#imageEditorActions button {
+  border-radius: 0.5rem;
+  padding: 5px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  flex-direction: column;
+  width: auto;
+  padding: 20px;
+  border-radius: 1rem;
+  height: auto;
+}
+
+#settings * {
+  margin-top: 10px;
+  width: 100%;
+}
+
+#settings button {
+  border-radius: 0.5rem;
+  padding: 5px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#settings input[type=number] {
+  border-radius: 0.5rem;
+  padding: 5px;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  width: 78%;
+  box-shadow: none;
+}
+
+#settings input[type=number]:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#settings #sizeOfAffect {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+}
+
+#settings #sizeOfAffect label {
+  width: auto;
+  margin-right: 20px;
+}
+
+.attachmentBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 0.5rem;
+  margin-right: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  background-color: transparent;
+}
+
+.modal {
+  overflow: hidden;
+  border-radius: 1rem;
+  padding: 35px;
+}
+
+.attachmentImg {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+.attachmentImage {
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 1.5rem;
+  height: calc(100% - 10px) !important;
+  max-width: 100% !important;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  font-size: 30px;
+}
+
+.showAttachmentDialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  height: 90%;
+  aspect-ratio: 1/1;
+}
+
+#imageEditorDialog {
+  width: 90%;
+  padding: 30px;
+  border-radius: 1.5rem;
+}
+
+.dark #promptBar[uploadable] #uploadImage {
+  color: #fff;
+}
+.dark #promptBar[uploaded][uploadable] #uploadedImage {
+  color: #fff;
+}
+.dark #imageEditor {
+  background-color: #676767;
+}
+.dark #closeImageEditor {
+  color: #b3b3b3;
+}
+.dark #closImageEditor:hover {
+  color: #fff;
+}
+.dark #closImageEditor:active {
+  color: gray;
+}
+.dark #imageEditorTitle {
+  color: #fff;
+}
+.dark #imageEditorActions {
+  background-color: #424242;
+}
+.dark #imageEditorActions button {
+  background-color: #424242;
+  color: #fff;
+}
+.dark #imageEditorActions button:hover {
+  background-color: #2f2f2f;
+}
+.dark #imageEditorActions button:active {
+  background-color: #212121;
+}
+.dark #settings {
+  background-color: #424242;
+  color: #fff;
+}
+.dark #settings button {
+  background-color: #424242;
+  color: #fff;
+}
+.dark #settings button:hover {
+  background-color: #2f2f2f;
+}
+.dark #settings button:active {
+  background-color: #212121;
+}
+.dark #settings input[type=number] {
+  background-color: #2f2f2f;
+  color: #fff;
+}
+.dark #settings input[type=number]:focus {
+  background-color: #212121;
+  border-color: #000;
+}
+.dark .attachmentBtn:hover {
+  background-color: #424242;
+}
+.dark .modal {
+  background-color: #676767;
+}
+.dark .closeBtn {
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+.dark .closeBtn:hover {
+  color: #b3b3b3 !important;
+}
+.dark .closeBtn:active {
+  color: gray !important;
+}
+.dark #imageEditorDialog {
+  background-color: #171717;
+}
+
+.light #promptBar[uploadable] #uploadImage {
+  color: #000;
+}
+.light #promptBar[uploaded][uploadable] #uploadedImage {
+  color: #000;
+}
+.light #imageEditor {
+  background-color: #676767;
+}
+.light #closeImageEditor {
+  color: #4d4d4d;
+}
+.light #closImageEditor:hover {
+  color: #000;
+}
+.light #closImageEditor:active {
+  color: gray;
+}
+.light #imageEditorTitle {
+  color: #000;
+}
+.light #imageEditorActions {
+  background-color: #9b9b9b;
+}
+.light #imageEditorActions button {
+  background-color: #9b9b9b;
+  color: #000;
+}
+.light #imageEditorActions button:hover {
+  background-color: #b4b4b4;
+}
+.light #imageEditorActions button:active {
+  background-color: #cdcdcd;
+}
+.light #settings {
+  background-color: #9b9b9b;
+  color: #000;
+}
+.light #settings button {
+  background-color: #9b9b9b;
+  color: #000;
+}
+.light #settings button:hover {
+  background-color: #b4b4b4;
+}
+.light #settings button:active {
+  background-color: #cdcdcd;
+}
+.light #settings input[type=number] {
+  background-color: #2f2f2f;
+  color: #fff;
+}
+.light #settings input[type=number]:focus {
+  background-color: #cdcdcd;
+  border-color: #fff;
+}
+.light .attachmentBtn:hover {
+  background-color: #9b9b9b;
+}
+.light .modal {
+  background-color: #676767;
+}
+.light .closeBtn {
+  color: #000;
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+.light .closeBtn:hover {
+  color: black !important;
+}
+.light .closeBtn:active {
+  color: gray !important;
+}
+.light #imageEditorDialog {
+  background-color: #ececec;
+}/*# sourceMappingURL=uploadImage.css.map */

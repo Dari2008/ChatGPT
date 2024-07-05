@@ -1,0 +1,36 @@
+{
+    "name": "OAFL",
+    "version": "1.0.0",
+    "description": "A chatbot powered by GPT",
+    "author": "Darius Frobeen",
+    "license": "MIT",
+    "short_name": "OAFL",
+    "theme_color": "#000000",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "start_url": "/tools/chatGpt/",
+    "scope": "/tools/chatGpt/",
+    "icons": [
+        {
+            "src": "./icons/favicon1024x1024.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/favicon144x144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/favicon90x90.png",
+            "sizes": "90x90",
+            "type": "image/png"
+        },
+        {
+            "src": "./icons/favicon24x24.png",
+            "sizes": "24x24",
+            "type": "image/png"
+        }
+    ],
+    "id": "com.dariusfrobeen.chatgpt"
+}

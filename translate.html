@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Page Title</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+        
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </head>
+    <body>
+        <div id="google_translate_element"></div>
+        
+        <br>
+        <br>
+        <input type="file" id="sourceFile">
+        <br>
+        <br>
+        <a onclick="downloadData();">Download</a>
+        <br>
+        <br>
+        <a onclick='if(!codes){codes = prompt("Code of the languages:", "de, en, es, fr, it, ja, ko, pt, ru, zh-CN, zh-TW").replace(/[" ]/gi, "").split(/[, |,]/gi).filter((e)=>e!=""); console.log(codes);downloadForCode();}else{downloadData(); downloadForCode();}' id="downloadNext">Download All</a>
+        
+        <br>
+        <br>
+        <br>
+        
+        <div id="translateData">
+
+        </div>
+        <script>
+            var jsonData = null;
+            var lang = null;
+            let regex = /<(\/)?\s*font\s*.*?>/gi;
+            let extraCharacterBack = /<span data-character=["|'](\(|\)|\[|\]|\%|\$|\§|\/|\\)["|'](.*?)<\/span>/gi;
+            let extraCharacter = /(\(|\)|\[|\]|\%|\$|\§|\/|\\)/gi;
+            let multipleSpace = /\s{2,}/gi;
+            let replaceSpaceAtEnd = /(\s+)$/gi;
+            var codes = null;
+            let currentI = null;
+            document.getElementById("sourceFile").onchange = function() {
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onload = function(progressEvent) {
+                    jsonData = JSON.parse(this.result);
+                    display();
+                };
+                reader.readAsText(file);
+            };
+            
+
+            function downloadForCode(){
+                if(!codes)return;
+                if(currentI >= codes.length){
+                    currentI = null;
+                    codes = null;
+                    document.getElementById("downloadNext").innerText = "Download All";
+                    return;
+                }
+
+                document.getElementById("downloadNext").innerText = "Download (" + (currentI + 1) + "/" + codes.length + ")";
+
+                document.querySelector(".goog-te-combo").value = codes[currentI];
+                document.querySelector(".goog-te-combo").dispatchEvent(new Event('change', {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                    detail: { value: codes[currentI] },
+
+                }));
+                currentI++;
+            }
+
+            function downloadData(){
+                if(!jsonData)return;
+                let data = JSON.parse(JSON.stringify(jsonData));
+                function decompile(json){
+                    for(let key of Object.keys(json)){
+                        if(typeof json[key] == "object"){
+                            decompile(json[key]);
+                        }else if(typeof json[key] != "array"){
+                            json[key] = replaceExtraCharactersBack(document.querySelector(`[data-key="${json[key]}"]`).innerHTML.replace(regex, ""));
+                        }
+                    }
+                }
+
+                decompile(data)
+
+                let val = document.querySelector(".goog-te-combo")!=null?document.querySelector(".goog-te-combo").value:"en";
+
+                let conf = prompt("Name:", val + ".json");
+                if(!conf){
+                    return;
+                }
+
+                let blob = new Blob([JSON.stringify(data)], {type: "application/json"});
+                let url = URL.createObjectURL(blob);
+                let a = document.createElement("a");
+                a.href = url;
+                a.download = conf;
+                a.click();
+            }
+
+            function display(){
+                if(!jsonData)return;
+                let main = document.getElementById("translateData");
+                main.innerHTML = "";
+
+                let i = 0;
+
+                function addElement(parent, json){
+                    for(let key of Object.keys(json)){
+                        if(typeof json[key] == "object"){
+                            addElement(parent, json[key]);
+                        }else if(typeof json[key] != "array"){
+                            let div = document.createElement("div");
+                            div.innerHTML = json[key];
+                            div.setAttribute("data-key", i);
+                            json[key] = i;
+                            i++;
+                            replaceExtraCharactersMultipleChilds(div);
+                            parent.appendChild(div);
+                        }
+                    }
+                }
+
+                addElement(main, jsonData);
+            }
+
+            function replaceExtraCharactersMultipleChilds(element){
+                if(element.children.length == 0){
+                    element.innerHTML = replaceExtraCharacters(element.innerHTML);
+                }else{
+                    for(let child of element.children){
+                        replaceExtraCharactersMultipleChilds(child);
+                    }
+                }
+            }
+
+            function replaceExtraCharactersBack(str){
+                return str.replaceAll(extraCharacterBack, "$1").replaceAll(multipleSpace, " ").replace(replaceSpaceAtEnd, "");
+            }
+
+            function replaceExtraCharacters(str){
+                return str.replaceAll(extraCharacter, " <span data-character='$1' style='color:red;'></span> ");
+            }
+
+        </script>
+    </body>
+</html>

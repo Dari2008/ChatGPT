@@ -1,0 +1,509 @@
+@use "../Variables.scss" as *;
+
+#settingsDialog{
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0px;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    z-index: 1000;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+#settingsDialog:not([show]){
+    display: none;
+}
+
+#settingsDialog[show]{
+    display: grid;
+}
+
+#closeSettings{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    margin: 0px;
+    padding: 0px;
+    z-index: 10000;
+}
+
+
+#settingsList{
+    grid-area: 1 / 1 / 2 / 2;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;  
+    height: 100%;
+}
+
+$buttonheightTotal: 50px;
+$buttonPadding: 10px;
+
+#settingsList button[selected]{
+    position: relative;
+    padding: $buttonPadding;
+    height: $buttonheightTotal;
+}
+
+$outerCornerRadius: 25px;
+$size: 7px;
+
+#settingsList button[selected]:after{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: -20px;
+    right: -1px;
+    border-top-right-radius: $outerCornerRadius;
+    background-color: transparent;
+    z-index: 100;
+}
+
+#settingsList button[selected]:before{
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: -20px;
+    right: -1px;
+    border-bottom-right-radius: $outerCornerRadius;
+    background-color: transparent;
+    z-index: 100;
+}
+
+#settingsList button[selected] .borderRemover{  
+    width: 2px;
+    position: absolute;
+    top: 0px;
+    right: -2px;
+    height: 100%;
+    z-index: 100;
+}
+
+#settingsList button{
+    position: relative;
+    padding: $buttonPadding;
+    height: $buttonheightTotal;
+}
+
+#contents{
+    grid-area: 1 / 2 / 2 / 3;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-collapse: collapse;
+}
+
+.settings-element{
+    height: auto;
+    min-height: 100px;
+    display: grid;
+    grid-template-columns: auto 14rem;
+    grid-template-rows: repeat(3, auto);
+    grid-row-gap: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    column-gap: 15%;
+    box-sizing: border-box;
+}
+
+.settings-element[disabled]{
+    opacity: 0.25 !important;
+    
+}
+
+$border-height: 4px;
+
+.settings-element:first-child{
+    border-bottom: $border-height/2 solid $gray-700;
+}
+
+.settings-element:not(:first-child):not(:last-child){
+    border-top: $border-height/2 solid $gray-700;
+    border-bottom: $border-height/2 solid $gray-700;
+}
+
+.settings-element:last-child{
+    border-top: $border-height/2 solid $gray-700;
+}
+
+.settings-title{
+    grid-area: 1 / 1 / 2 / 3;
+    font-size: 14px;
+    padding: 10px;
+    opacity: 0.6;
+}
+
+.settings-label{
+    grid-area: 2 / 1 / 3 / 2;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.settings-input{
+    grid-area: 1 / 2 / 4 / 3;
+    padding-left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    z-index: 1000;
+}
+
+.settings-description{
+    grid-area: 3 / 1 / 4 / 3;
+    opacity: 0.45;
+    text-align: start;
+    padding-left: 10px;
+    font-size: 13px;
+}
+
+// Toggle (https://uiverse.io/Galahhad/modern-quail-75)
+.switch {
+    /* switch */
+    --switch-width: 46px;
+    --switch-height: 24px;
+    --switch-checked-bg: rgb(0, 218, 80);
+    --switch-bg: rgb(131, 131, 131);
+    --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
+    --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+    /* circle */
+    --circle-diameter: 18px;
+    --circle-bg: #fff;
+    --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
+    --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
+    --circle-transition: var(--switch-transition);
+    /* icon */
+    --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+    --icon-cross-color: var(--switch-bg);
+    --icon-cross-size: 6px;
+    --icon-checkmark-color: var(--switch-checked-bg);
+    --icon-checkmark-size: 10px;
+    /* effect line */
+    --effect-width: calc(var(--circle-diameter) / 2);
+    --effect-height: calc(var(--effect-width) / 2 - 1px);
+    --effect-bg: var(--circle-bg);
+    --effect-border-radius: 1px;
+    --effect-transition: all .2s ease-in-out;
+}
+
+
+.switch input {
+    display: none;
+}
+
+.switch {
+    display: inline-block;
+}
+
+.switch svg {
+    -webkit-transition: var(--icon-transition);
+    -o-transition: var(--icon-transition);
+    transition: var(--icon-transition);
+    position: absolute;
+    height: auto;
+}
+
+.switch .checkmark {
+    width: var(--icon-checkmark-size);
+    color: var(--icon-checkmark-color);
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+}
+
+.switch .cross {
+    width: var(--icon-cross-size);
+    color: var(--icon-cross-color);
+}
+
+.slider {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: var(--switch-width);
+    height: var(--switch-height);
+    background: var(--switch-bg);
+    border-radius: 999px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    position: relative;
+    -webkit-transition: var(--switch-transition);
+    -o-transition: var(--switch-transition);
+    transition: var(--switch-transition);
+    cursor: pointer;
+}
+
+.circle {
+    width: var(--circle-diameter);
+    height: var(--circle-diameter);
+    background: var(--circle-bg);
+    border-radius: inherit;
+    -webkit-box-shadow: var(--circle-shadow);
+    box-shadow: var(--circle-shadow);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-transition: var(--circle-transition);
+    -o-transition: var(--circle-transition);
+    transition: var(--circle-transition);
+    z-index: 1;
+    position: absolute;
+    left: var(--switch-offset);
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: var(--effect-width);
+    height: var(--effect-height);
+    left: calc(var(--switch-offset) + (var(--effect-width) / 2));
+    background: var(--effect-bg);
+    border-radius: var(--effect-border-radius);
+    -webkit-transition: var(--effect-transition);
+    -o-transition: var(--effect-transition);
+    transition: var(--effect-transition);
+}
+
+/* actions */
+
+.switch input:checked+.slider {
+    background: var(--switch-checked-bg);
+}
+
+.switch input:checked+.slider .checkmark {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+}
+
+.switch input:checked+.slider .cross {
+    -webkit-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+}
+
+.switch input:checked+.slider::before {
+    left: calc(100% - var(--effect-width) - (var(--effect-width) / 2) - var(--switch-offset));
+}
+
+.switch input:checked+.slider .circle {
+    left: calc(100% - var(--circle-diameter) - var(--switch-offset));
+    -webkit-box-shadow: var(--circle-checked-shadow);
+    box-shadow: var(--circle-checked-shadow);
+}
+
+.overflow{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    width: auto;
+}
+
+.settings-title-element{
+    padding: 10px;
+    opacity: 0.9;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+body[lang="de"] #touapp a,
+body[lang="da"] #touapp a,
+body[lang="fr"] #touapp a,
+body[lang="es"] #touapp a{
+    line-break: anywhere;
+    text-align: center;
+    font-size: 0.7rem;
+}
+.dark{
+    $mainContentBgColor: $gray-800;
+
+    .settings-element{
+        border-image: linear-gradient(90deg, 
+        $gray-800 0%,
+        $gray-700 33%,
+        $gray-700 66%,
+        $gray-800 100%
+        ) 1;
+    }
+
+    #settingsList button[selected]:after{
+        box-shadow: $size 0px - $size 0px $size $mainContentBgColor;  
+    }
+    #settingsList button[selected]:before{
+        box-shadow: $size $size 0px $size $mainContentBgColor;
+    }
+
+    .settings-title-element{
+        color: white;
+    }
+
+    .settings-description{
+        color: white;
+    }
+
+    .settings-title{
+        color: white;
+    }
+
+    .settings-label{
+        color: white;
+    }
+
+    #contents{
+        background-color: $gray-800;
+    }
+
+    #settingsList button:hover{
+        background-color: $mainContentBgColor;
+    }
+    
+    #settingsList button:active{
+        background-color: lighten($mainContentBgColor, 10%);
+    }
+    
+    #settingsList button{
+        background-color: $gray-900;
+        color: white;
+    }
+
+    #settingsList button[selected] .borderRemover{
+        background-color: $mainContentBgColor;
+    }
+
+    #settingsDialog{
+        background-color: $mainContentBgColor;
+        color: $white;
+    }
+
+    #closeSettings{
+        color: $white;
+        background-color: transparent !important; 
+    }
+
+    #closeSettings:hover{
+        color: $gray-600;
+    }
+    
+    #closeSettings:active{
+        color: $gray-900;
+    }
+
+    #settingsList{
+        background-color: $gray-900;
+        border-right: 1px solid $gray-700;
+    }
+
+    #settingsList button[selected]{
+        background-color: $mainContentBgColor;
+        color: $white;
+    }
+}
+
+.light{
+    
+
+    $mainContentBgColor: $gray-50;
+
+    .settings-element{
+        border-image: linear-gradient(90deg, 
+        $gray-200 0%,
+        $gray-300 33%,
+        $gray-300 66%,
+        $gray-200 100%
+        ) 1;
+    }
+
+    #settingsList button[selected]:after{
+        box-shadow: $size 0px - $size 0px $size $mainContentBgColor;  
+    }
+    #settingsList button[selected]:before{
+        box-shadow: $size $size 0px $size $mainContentBgColor;
+    }
+
+    .settings-title-element{
+        color: black;
+    }
+
+    .settings-description{
+        color: black;
+    }
+
+    .settings-title{
+        color: black;
+    }
+
+    .settings-label{
+        color: black;
+    }
+
+    #contents{
+        background-color: $mainContentBgColor;
+    }
+
+    #settingsList button:hover{
+        background-color: $mainContentBgColor;
+    }
+    
+    #settingsList button:active{
+        background-color: $gray-300;
+    }
+    
+    #settingsList button{
+        background-color: $gray-200;
+        color: black;
+    }
+
+    #settingsList button[selected] .borderRemover{
+        background-color: $mainContentBgColor;
+    }
+
+    #settingsDialog{
+        background-color: $mainContentBgColor;
+        color: $black;
+    }
+
+    #closeSettings{
+        color: $black;
+        background-color: transparent !important; 
+    }
+
+    #closeSettings:hover{
+        color: $gray-400;
+    }
+    
+    #closeSettings:active{
+        color: $gray-100;
+    }
+
+    #settingsList{
+        background-color: $gray-200;
+        border-right: 1px solid $gray-300;
+    }
+
+    #settingsList button[selected]{
+        background-color: $mainContentBgColor;
+        color: $black;
+    }
+}

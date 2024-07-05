@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html class="light">
+    <head>
+
+
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>OAFL</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+        <!-- Add Meta Data -->
+        <meta name=description content="A cheaper version of ChatGPT">
+
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <meta name="apple-mobile-web-app-title" content="OAFL">
+        <link rel="manifest" href="manifest.json">
+
+        <link rel="apple-touch-icon" sizes="60x60" href="./icons/favicon60x60.png">
+        <link rel="apple-touch-icon" sizes="76x76" href="./icons/favicon76x76.png">
+        <link rel="apple-touch-icon" sizes="120x120" href="./icons/favicon120x120.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="./icons/favicon152x152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="./icons/favicon180x180.png">
+
+        <link rel='stylesheet' type='text/css' media='screen' href='allStyles.css'>
+        <link rel='stylesheet' type='text/css' media='screen' href='https://unpkg.com/highlightjs@9.16.2/styles/atom-one-dark.css'>
+
+        <!-- Set Favicon -->
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+        <!-- Google login -->
+        <script src="https://accounts.google.com/gsi/client" async></script>
+
+        <!-- Fonts -->
+        <link rel='stylesheet' type='text/css' media='screen' href='Fonts.css'>
+          
+        <script src="otherLibs/jquery.min.js"></script>
+
+        <!-- 100lighting of code -->
+        <script src="otherLibs/highlight.min.js"></script>
+        <!-- Markdown -->
+        <script src="otherLibs/markdown-it.min.js"></script>
+
+        <script src="otherLibs/replaceLast.js"></script>
+
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-19PQ84947V"></script>
+        <script importance="90">
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-19PQ84947V');
+        </script>
+
+
+        <!-- PayPal -->
+        <script src="https://www.paypal.com/sdk/js?client-id=AS3bgwnm8btPwXtN887C1EaBpTSdrMD_zlAT3ohD5emwnRhkJ3a2Ntyv6jH35CBDhiJ8OMS9jCYjZ7FE&components=buttons&currency=USD"></script>
+        <script>
+            ORDERPATH = "https://tools.frobeen.com/chatGPT/phpData/orders.php";
+        </script>
+
+<!-- <script src="**/*.js" defer="payment.js,usage.js,priceCalculation.js,payment.js,LanguageElement.js" exclude="./offlineSw.js"></script -->
+
+        <!-- <script src="**/*.min.js" defer="payment.js,usage.js,priceCalculation.js,payment.js,LanguageElement.js" exclude="./offlineSw.js"></script> -->
+
+        <!-- Only Functions -->
+
+        <script src="usage/downloadPdf.js" importance="9"></script>
+        <script src="usage/dataCollection.js" importance="9"></script>
+        <script src="payment/priceCalculation.js" importance="9"></script>
+        <script src="loginLogic.js" importance="9"></script>
+
+
+        <script src="otherLibs/cookieWatcher.js" importance="100"></script>
+        <script src="otherLibs/wait.js" importance="100"></script>
+        <script src="otherLibs/alert.js" importance="100"></script>
+        <script src="otherLibs/replaceLast.js" importance="100"></script>
+        <script src="chatManagement/OpenAI.js" importance="100"></script>
+        <script src="chatManagement/Chat.js" importance="10"></script>
+        <script src="chatManagement/Message.js" importance="10"></script>
+        <script src="chatManagement/MessageHistory.js" importance="10"></script>
+        <script src="chatManagement/ImageStorage.js" importance="10"></script>
+        <script src="chatManagement/ChatStorage.js" importance="10"></script>
+        <script src="SVGData.js" importance="1"></script>
+        <script src="painting.js"importance="1"></script>
+        <script src="usage/usage.js"importance="5"></script>
+        <script src="usage/usageChart.js"importance="5"></script>
+        <script src="usage/customDropDown.js"importance="40"></script>
+        <script src="payment/payment.js"importance="90"></script>
+
+        <script src="language/Language.js" importance="1000"></script>
+        <script src="settings/SettingsLanguageMenu.js" importance="40"></script>
+        <script src="settings/SettingsTitleElement.js" importance="40"></script>
+        <script src="settings/SettingsToggleElement.js" importance="40"></script>
+        <script src="settings/SettingsNumberSelectorElement.js" importance="40"></script>
+        <script src="settings/ToggleGroupElement.js" importance="40"></script>
+        <script src="settings/ToggleElement.js" importance="60"></script>
+        <script src="language/LanguageElementData.js" importance="60"></script>
+        <script src="customElements/LanguageToggleElement.js" importance="60"></script>
+        <script src="customElements/LanguageElement.js" importance="60"></script>
+        <script src="settingsLoader.js" importance="60"></script>
+        <script src="main.js" importance="90"></script>
+
+        <!-- <script src='min.js'></script> -->
+        
+        <script importance="100">
+            DATAURL = "https://tools.frobeen.com/chatGPT/phpData/data.php";
+            MAIN_URL_PATH = "https://tools.frobeen.com/chatGPT/phpData/";
+            fetch("./forceHttp.bool").then(r=>r.text()).then(r=>{if(r == "true")forceHttp();});
+
+            function forceHttp(){
+                if(location.protocol != "https:"){
+                    location.protocol = "https:";
+                }
+            }
+            let lang = new Language();
+
+        </script>
+
+    </head>
+    <body onload="document.dispatchEvent(new CustomEvent('documentLoaded')); loadChats(); init();">
+
+        <div id="tmp"></div>
+    
+        <script name="CheckDarkLightMode" importance="200">
+            let isDarkMode = false;
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                isDarkMode = true;
+            }else{
+                isDarkMode = false;
+            }
+        </script>
+    
+        <script importance="40">
+            let valuesForMinify = {
+                pay: "pay",
+                usageOverlay: "usageOverlay",
+                imageEditorDialog: "imageEditorDialog",
+                none: "none"
+            };
+    
+            function opnLoginWindow(){
+                for(let c of document.getElementsByClassName("g_id_signin")[0].children[0].children){
+                    if(c.classList.length >= 1){
+                        for(let child of c.children){
+                            if(child.tagName == "DIV"){
+                                child.dispatchEvent(new Event("click", {
+                                    cancelable: true,
+                                    bubbles: true,
+                                    composed: true
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+    
+            function isloggedIn(){
+                let names = [
+                    "email",
+                    "name",
+                    "imageData"
+                ];
+    
+                let cookieName = [
+                    "authToken"
+                ];
+    
+                for(let name of names){
+                    let e = localStorage.getItem(name);
+                    if(e == null || e == undefined || e == "" || e == "null" || e == "undefined"){
+                        return false;
+                    }
+                }
+    
+                for(let name of cookieName){
+                    let e = getCookie(name);
+                    if(e == null || e == undefined || e == "" || e == "null" || e == "undefined"){
+                        return false;
+                    }
+                }
+                return true;
+            }
+    
+        </script>
+    
+        <div id="google_translate_element" style="display: none;"></div>
+    
+        <button id="menu">
+            >
+        </button>
+        <div id="sideMenu">
+            <button id="newChat"><language-element path="chats.newChat"></language-element></button>
+            <div class="frame">
+                <div id="chats"></div>
+            </div>
+            <div id="profileOptions">
+                <button id="payIn" onclick="document.getElementById(valuesForMinify.pay).showModal();closeOptions();">
+                    <img src="./images/payIn.svg" width="24" height="24" alt="Pay In">
+                    <language-element path="settingsOptions.payIn"></language-element>
+                </button>
+                <button id="usage" onclick="closeOptions();showUsage();">
+                    <img src="./images/usage.svg" width="24" height="24" alt="Usage">
+                    <language-element path="settingsOptions.usage"></language-element>
+                </button>
+                <button id="deleteAllChats" onclick="closeOptions();deleteAllChats();">
+                    <img src="./images/delete.svg" width="24" height="24" alt="Delete">
+                    <language-element path="settingsOptions.deleteAllChats"></language-element>
+                </button>
+                <button id="globalSettings" onclick="closeOptions();toggleSettings()">
+                    <img src="./images/settings.svg" width="24" height="24" alt="Settings">
+                    <language-element path="settingsOptions.settings"></language-element>
+                </button>
+                <button id="logout" class="g_id_signout">
+                    <img src="./images/logout.png" alt="Logout">
+                    <language-element path="settingsOptions.logout"></language-element>
+                </button>
+                <div id="touapp">
+                    <a href="https://tools.frobeen.com/chatGPT/termsOfUse" target="_blank">
+                        <language-element path="settingsOptions.termsOfUse"></language-element>
+                    </a>
+                    <a href="https://tools.frobeen.com/chatGPT/privacyPolicy" target="_blank">
+                        <language-element path="settingsOptions.privacyPolicy"></language-element>
+                    </a>
+                </div>
+            </div>
+            <div class="centerAll" id="centerGooglelogin">
+                <div id="login">
+                    <div id="g_id_onload"
+                        data-client_id="640190834544-spfibcnhqivfp8hpc5po8ke5ilg57t0e.apps.googleusercontent.com"
+                        data-context="signin"
+                        data-ux_mode="popup"
+                        data-callback="handleCredentialResponse"
+                        data-auto_select="true"
+                        data-close_on_tap_outside="false"
+                        data-itp_support="true">
+                    </div>
+                    <!-- Dark Mode -->
+                    <div class="g_id_signin googleloginitemDarkMode"
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-theme="filled_black"
+                        data-text="continue_with"
+                        data-size="large"
+                        data-logo_alignment="left"
+                        data-width="260">
+                    </div>
+                    <!-- Light Mode -->
+                    <div class="g_id_signin googleloginitemLightMode"
+                        data-type="standard"
+                        data-shape="rectangular"
+                        data-theme="filled_white"
+                        data-text="continue_with"
+                        data-size="large"
+                        data-logo_alignment="left"
+                        data-width="260">
+                    </div>
+                </div>
+                <div id="google" onclick="toggleOptions()">
+                    <img id="profileImage">
+                    <span id="name"></span>
+                    <span id="email"></span>
+                </div>
+            </div>
+    
+            <script importance="40">
+                document.addEventListener("documentLoaded", ()=>{
+                    const button = document.getElementById('logout');
+                    button.onclick = () => {
+                        localStorage.setItem("googleLoggedIn", "false");
+                        google.accounts.id.disableAutoSelect();
+                        logoutOfApp();
+                    }
+                });
+            </script>
+    
+        </div> 
+    
+        <div id="frame">
+            <select name="model" id="model">
+                <script id="loadModels" importance="40">
+                    let modelsDownloaded = false
+                    async function loadModelData(){
+                        if(modelsDownloaded)return;
+                        modelsDownloaded = true;
+                        let data = await (fetch(MAIN_URL_PATH + "models.php", {
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Auth": "Bearer " + OpenAI.INSTANCE.getAccessToken(),
+                            },
+                            method: "POST",
+                            mode: "cors"
+                        }).then(res => res.json()));
+    
+                        let gpt4Group = [];
+                        let gpt3Group = [];
+                        let dallEGroup = [];
+    
+                        if(!data.ok){
+                            alert(lang.get("messages.error.couldNotLoadModels"), AlertType.ERROR, 3000);
+                            return;
+                        }
+    
+                        let maxTokens = data.maxTokens;
+                        let modelData = data.modelData;
+                        let pricePerTokens = data.costPerTokens;
+    
+                        let names = [];
+    
+                        names = Object.keys(data.modelData);
+    
+                        for(let model of names){
+                            if(model.startsWith("gpt-4")){
+                                gpt4Group.push(model);
+                            }else if(model.startsWith("gpt-3")){
+                                gpt3Group.push(model);
+                            }else if(model.startsWith("dall-e")){
+                                dallEGroup.push(model);
+                            }
+                        }
+    
+                        let modelSelect = document.getElementById("model");
+    
+                        let gpt4GroupElement = document.createElement("optgroup");
+                        gpt4GroupElement.label = "GPT-4";
+                        let gpt3GroupElement = document.createElement("optgroup");
+                        gpt3GroupElement.label = "GPT-3";
+                        let dallEGroupElement = document.createElement("optgroup");
+                        dallEGroupElement.label = "DALL⋅E";
+    
+                        for(let model of gpt4Group){
+                            let option = document.createElement("option");
+                            option.value = model;
+                            option.setAttribute("tokens", maxTokens[model]);
+                            option.setAttribute("priceInput", modelData[model][0] + "/" + pricePerTokens);
+                            option.setAttribute("priceOutput", modelData[model][1] + "/" + pricePerTokens);
+                            option.setAttribute("overAllRoundAbout", Math.round((modelData[model][0] + modelData[model][1])*10000)/10000);
+                            gpt4GroupElement.appendChild(option);
+                        }
+    
+                        for(let model of gpt3Group){
+                            let option = document.createElement("option");
+                            option.value = model;
+                            option.setAttribute("tokens", maxTokens[model]);
+                            option.setAttribute("priceInput", modelData[model][0] + "/" + pricePerTokens);
+                            option.setAttribute("priceOutput", modelData[model][1] + "/" + pricePerTokens);
+                            option.setAttribute("overAllRoundAbout", Math.round((modelData[model][0] + modelData[model][1])*10000)/10000);
+                            gpt3GroupElement.appendChild(option);
+                        }
+    
+                        for(let model of dallEGroup){
+                            let option = document.createElement("option");
+                            option.value = model;
+                            option.setAttribute("tokens", "");
+                            option.setAttribute("priceOverAll", modelData[model]);
+                            dallEGroupElement.appendChild(option);
+                        }
+    
+                        modelSelect.appendChild(gpt3GroupElement);
+                        modelSelect.appendChild(gpt4GroupElement);
+                        modelSelect.appendChild(dallEGroupElement);
+    
+                        createCustomDropDown();
+                    }
+                </script>
+            </select>
+        </div>
+        <dialog id="pay">
+            <button id="closePay" class="close"  onclick="document.getElementById(valuesForMinify.pay).close(); currentStage = 0; updateStage();">&#10005;</button>
+            <div id="stage1">
+                <h2><language-element path="payIn.scene1.title"></language-element>:</h2>
+                <div class="center">
+                    <div id="amount1" class="amount" onclick="nextStageWithPrice(1)">1</div>
+                    <div id="amount2" class="amount" onclick="nextStageWithPrice(5)">5</div>
+                    <div id="amount3" class="amount" onclick="nextStageWithPrice(10)">10</div>
+                    <div id="amount4" class="amount" onclick="nextStageWithPrice(20)">20</div>
+                    <div id="amount5" class="amount" onclick="nextStageWithPrice(50)">50</div>
+                    <div id="amount6" class="amount" onclick="nextStageWithPrice(100)">100</div>
+                    <div id="customAmount" class="amount">
+                        <input type="text" id="amountInput" placeholder="Custom value" value="" min="1" max="100" step="1">
+                    </div>
+                </div>
+            </div>
+            <div id="stage2" class="stage" style="display: none;">
+                <h2><language-element path="payIn.scene2.title"></language-element></h2>
+    
+                <div id="overview">
+                    <div id="centerTableOverview">
+                        <table id="overviewTable">
+                            <tbody>
+                                <tr>
+                                    <td class="nameTd"><language-element path="payIn.scene2.amount"></language-element></td>
+                                    <td id="amountOverview">$1</td>
+                                </tr>
+                                <tr>
+                                    <td class="nameTd"><language-element path="payIn.scene2.fee"></language-element></td>
+                                    <td id="fee">$0</td>
+                                </tr>
+                                <tr class="line">
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="total">
+                                    <td class="nameTd"><language-element path="payIn.scene2.total"></language-element></td>
+                                    <td id="total">$1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+    
+            </div>
+            <div id="stage3" class="stage" style="display: none;">
+                <h2><language-element path="payIn.scene3.title"></language-element></h2>
+                <div id="paypal-button-container"></div>
+            </div>
+    
+            <div id="actions">
+                <button id="back" onclick="backStage()"><language-element path="payIn.back"></language-element></button>
+                <button id="next" onclick="nextStage();"><language-element path="payIn.next"></language-element></button>
+            </div>
+    
+            <script importance="10">
+                document.addEventListener("documentLoaded", ()=>document.getElementById("amountInput").value = "1");
+            </script>
+    
+        </dialog>
+    
+        <dialog id="usageOverlay">
+            <button class="close" onclick="document.getElementById(valuesForMinify.usageOverlay).close();">&#10005;</button>
+            <div id="cost">
+                <h2 id="costLabel"><language-element path="usage.title"></language-element></h2>
+                <div id="costContent">
+                    <div id="costDiv">
+                        <div>
+                            <span class="signs">$</span>
+                            <span id="usedCost">12</span>
+                            <span class="signs">&ThickSpace;/&ThickSpace;$</span>
+                            <span id="maxCost">12</span>
+                        </div>
+                        <br>
+                        <div id="available">
+                            <p id="left">$12</p>
+                            <span id="availabelCost"><language-element path="usage.available"></language-element></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <h2 id="activityLabel"><language-element path="usage.activity"></language-element></h2>
+            <div id="Activity">
+                <div id="progressbar"></div>
+    
+                <div id="legend">
+                <div class="chatAiDiv" id="chatAiDivId">
+                    <label class="legendLabel" for="chatAI"><language-element path="usage.chatAi"></language-element></label>
+                    <div class="aiLegend" id="GPT-4-0613">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-4-0613</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-3v5-turbo-0125">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-3.5-turbo-0125</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-3v5-turbo-16k-0613">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-3.5-turbo-16k-0613</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-3v5-turbo-0613">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-3.5-turbo-0613</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-4-0125-preview">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-4-0125-preview</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-4-1106-vision-preview">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-4-1106-vision-preview</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-4-1106-preview">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-4-1106-preview</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="GPT-3v5-turbo-1106">
+                    <div class="chatColor"></div>
+                    <span class="legendName">GPT-3.5-turbo-1106</span>
+                    <span class="requestCount"></span>
+                    </div>
+    
+                </div>
+                <div class="imageAIDiv" id="imageAIDivId">
+                    <span class="legendLabel" for="imageAI"><language-element path="usage.imageAi"></language-element></span>
+                    <div class="aiLegend" id="DALL-E-3">
+                    <div class="imageColor"></div>
+                    <span class="legendName">DALL-E-3</span>
+                    <span class="requestCount"></span>
+                    </div>
+                    <div class="aiLegend" id="DALL-E-2">
+                    <div class="imageColor"></div>
+                    <span class="legendName">DALL-E-2</span>
+                    <span class="requestCount"></span>
+                    </div>
+                </div>
+                </div>
+            </div>
+    
+            <button id="downloadPdf" onclick="downloadPDF()"><language-element path="usage.downloadAsPDF"></language-element></button>
+        </dialog>
+    
+        <div id="cocon">
+            <div id="cookieConsentContent">
+                <p><language-element path="cookieConsent.text"></language-element></p>
+                <button id="cookieConsentButton" onclick="acceptCookies()"><language-element path="cookieConsent.accept"></language-element></button>
+                <button id="cookieNotConsentButton" onclick="refuseCookies()"><language-element path="cookieConsent.refuse"></language-element></button>
+            </div>
+        </div>
+    
+        <script importance="9">
+    
+            let coId = "cocon";
+    
+            document.addEventListener("documentLoaded", ()=>{
+                if(localStorage.getItem("cookieConsent") == "true"){
+                    document.getElementById(coId).setAttribute("consent", "");
+                }
+            });
+            
+            function acceptCookies(){
+                localStorage.setItem("cookieConsent", "true");
+                document.getElementById(coId).setAttribute("consent", "");
+            }
+    
+            function refuseCookies(){
+                localStorage.setItem("cookieConsent", "false");
+                document.getElementById(coId).setAttribute("noconsent", "");
+            }
+        </script>
+    
+        <div id="settingsDialog">
+            <div class="overflow">
+                <div id="settingsList">
+    
+                </div>
+            </div>
+            <div class="overflow">
+                <div id="contents">
+                </div>
+            </div>
+            <button id="closeSettings" class="close" onclick="toggleSettings()">
+                <svg viewBox="0 0 24 24" fill="none" id="closeImg"><path d="M6 18L18 6M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+        </div>
+    
+        <dialog id="imageEditorDialog">
+            <button id="closeImageEditor" class="close"  onclick="document.getElementById(valuesForMinify.imageEditorDialog).close();">&#10005;</button>
+            <h2 id="imageEditorTitle"><language-element path="imageEdit.title"></language-element></h2>
+            <div id="imageEditorContent">
+                <img id="sourceImage" src="">
+                <canvas id="mask"></canvas>
+            </div>
+            <div id="imageEditorActions">
+                <button id="cancel"><language-element path="imageEdit.cancel"></language-element></button>
+                <button id="ok"><language-element path="imageEdit.ok"></language-element></button>
+            </div>
+            <div id="settings">
+                <div id="sizeOfAffect">
+                    <label for="areaOfAffectSize"><language-element path="imageEdit.size"></language-element>: </label>
+                    <input type="number" onchange="setBrushSize()" min="1" max="20" inputmode="numeric" id="areaOfAffectSize">
+                </div>
+                <button id="invert" onclick="invert()"><language-element path="imageEdit.invert"></language-element></button>
+                <button id="reset" onclick="reset()"><language-element path="imageEdit.reset"></language-element></button>
+            </div>
+        </dialog>
+    
+        <div id="overflowFrame">
+            <div id="content"></div>
+        </div>
+    
+    
+        <div id="promptBar">
+            <button id="uploadImage">+</button>
+            <img id="uploadedImage">
+            <textArea id="promptArea" spellcheck="false" oninput="updateSendBtn()" placeholder="Chat with GPT-4..."></textArea>
+            <button id="sendBtn" onclick="sendMessage()" disabled="">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white dark:text-black"><path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+            </button>
+        </div>
+    
+        <div id="options" style="display: none;">
+            <button class="delete" onclick="if(deleteChat) deleteChat();"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="color: red;"><path fill-rule="evenodd" clip-rule="evenodd" d="M10.5555 4C10.099 4 9.70052 4.30906 9.58693 4.75114L9.29382 5.8919H14.715L14.4219 4.75114C14.3083 4.30906 13.9098 4 13.4533 4H10.5555ZM16.7799 5.8919L16.3589 4.25342C16.0182 2.92719 14.8226 2 13.4533 2H10.5555C9.18616 2 7.99062 2.92719 7.64985 4.25342L7.22886 5.8919H4C3.44772 5.8919 3 6.33961 3 6.8919C3 7.44418 3.44772 7.8919 4 7.8919H4.10069L5.31544 19.3172C5.47763 20.8427 6.76455 22 8.29863 22H15.7014C17.2354 22 18.5224 20.8427 18.6846 19.3172L19.8993 7.8919H20C20.5523 7.8919 21 7.44418 21 6.8919C21 6.33961 20.5523 5.8919 20 5.8919H16.7799ZM17.888 7.8919H6.11196L7.30423 19.1057C7.3583 19.6142 7.78727 20 8.29863 20H15.7014C16.2127 20 16.6417 19.6142 16.6958 19.1057L17.888 7.8919ZM10 10C10.5523 10 11 10.4477 11 11V16C11 16.5523 10.5523 17 10 17C9.44772 17 9 16.5523 9 16V11C9 10.4477 9.44772 10 10 10ZM14 10C14.5523 10 15 10.4477 15 11V16C15 16.5523 14.5523 17 14 17C13.4477 17 13 16.5523 13 16V11C13 10.4477 13.4477 10 14 10Z" fill="currentColor"></path></svg></button>
+            <button class="setSystemMessage" onclick="if(setSystemMessage) setSystemMessage();"><language-element path="options.systemBehavior"></language-element></button>
+            <button class="rename" onclick="if(rename) rename();"><language-element path="options.rename"></language-element></button>
+        </div>
+        <script importance="9">
+            let md = window.markdownit({
+                linkify: true,
+                
+                highlight: function (code, lang) {
+                    if(lang == undefined || lang == null || lang == "") lang = "plaintext";
+                    code = hljs.highlight(code, {language:lang}).value
+                    return `<div class="codeDiv"><div class="topCodeDiv"><span class="codeName">${lang}</span><button class="copyCodeBtn" onclick="copyCode(this.parentElement.parentElement.querySelector('.distanceDiv').firstElementChild.firstElementChild.innerText, this);" ><img src="./images/copy.svg"></img>Copy code</button></div><div class="distanceDiv"><pre><code class="language-${lang} hljs" id="code-1">${code}</code></pre></div></div>`;
+                }
+            });
+
+            function renderInStyle(text){
+                let html = md.render(text);
+                return html;
+            }
+    
+            function toggleSettings(){
+                let settings = document.getElementById("settingsDialog");
+                if(settings.hasAttribute("show")){
+                    settings.removeAttribute("show");
+                }else{
+                    settings.setAttribute("show", "");
+                }
+            }
+    
+            function uuidv4(){
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+    
+        </script>
+    
+        <script importance="100">
+            function isChildOf(parent, child){
+                for(let i = 0; i < parent.children.length; i++){
+                    if(parent.children[i] == child){
+                        return true;
+                    }else{
+                        if(isChildOf(parent.children[i], child)){
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+    
+        function isChildOfId(element, id){
+            let parent = element.parent||element.parentElement;
+            if(parent == null || parent == undefined){
+                return false;
+            }
+            return parent.id == id || isChildOfId(parent, id);
+        }
+    
+        function isChildOfHtmlContent(element, child){
+            if(element == null || element == undefined || child == null || child == undefined){
+                return false;
+            }
+            if(element == child){
+                return true;
+            }
+            if(!element.outerHTML || !child.outerHTML){
+                return false;
+            }
+            if(element.outerHTML == child.outerHTML){
+                return true;
+            }
+    
+            let outerHTML = element.outerHTML;
+            let childOuterHTML = child.outerHTML;
+    
+            outerHTML = outerHTML.replaceAll(/[\n\r\s"\`']/gim, "");
+            childOuterHTML = childOuterHTML.replaceAll(/[\n\r\s"\`']/gim, "");
+    
+            return outerHTML.includes(childOuterHTML);
+        }
+        </script>
+    </body>
+</html>

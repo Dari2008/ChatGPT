@@ -1,0 +1,342 @@
+@use "../Variables.scss" as *;
+
+#legend {
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: Roboto;
+}
+
+.imageColor {
+    width: 10px;
+    height: 10px;
+    background-color: #DD5CE5;
+    margin-right: 10px;
+}
+
+.chatColor {
+    width: 10px;
+    height: 10px;
+    background-color: #36D0DA;
+    margin-right: 10px;
+}
+
+.aiLegend {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.legendLabel {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-size: 20px;
+    font-weight: 1000;
+}
+
+#legend {
+    width: 400px;
+}
+
+.requestCount {
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.imageAI {
+    background-color: #DD5CE5;
+}
+
+.chatAI {
+    background-color: #36D0DA;
+}
+
+.ai {
+    margin: 5px 1px;
+    height: 20px;
+}
+
+.first {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.last {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#progressbar {
+    display: flex;
+    width: 400px;
+    height: 30px;
+}
+
+.hoverBar{
+    background-color: darken(#36D0DA, 20%);
+}
+
+.hoverBarDalle{
+    background-color: darken(#DD5CE5, 20%);
+}
+
+#Activity{
+    width: auto;
+    align-self: center;
+    margin-top: 20px;
+}
+
+#usageOverlay[open]{
+    width: auto;
+    height: max-content;
+    max-height: 100%;
+    padding: 20px;
+    padding-top: 60px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;  
+    position: relative;
+}
+
+#activityLabel{
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    font-family: Roboto;
+    height: auto;
+}
+
+#costLabel{
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    font-family: Roboto;
+    height: auto;
+}
+
+#usageChart{
+    position: absolute;
+}
+
+#costDiv{
+    font-family: Roboto;
+    font-size: 1em;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    padding-right: 30px;
+    float: right;
+    height: 200px;  
+    flex-direction: column;
+}
+
+#costContent{
+    font-family: Roboto;
+    font-size: 50px;  
+    display: flex;
+    justify-content: center;
+}
+
+.signs{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#available{
+    font-size: 17px;
+    font-family: Roboto;
+    margin-left: 20px;
+    text-align: center;
+    vertical-align: bottom;
+    height: 50%;
+}
+
+#left{
+    border-bottom: 4px solid $gray-900;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+}
+
+#availabelCost{
+    margin-top: 10px;
+}
+
+#google:not([show]){
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: inherit;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+}
+
+#google[show]{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: inherit;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#centerGooglelogin{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: inherit;
+    height: 70px;
+}
+#google:hover{
+    cursor: pointer;
+}
+
+#downloadPdf{
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.buyMoreCredits, .pleaseLogin{
+    cursor: pointer;
+    text-decoration: underline !important;
+}
+
+.dark{
+    .buyMoreCredits:hover, .pleaseLogin:hover{
+        color: white !important;
+    }
+
+    .buyMoreCredits, .pleaseLogin{
+        color: lightblue !important;
+    }
+
+    #downloadPdf{
+        color: white;
+    }
+
+    #google:hover{
+        background-color: $gray-600;
+    }
+
+    #centerGooglelogin{
+        background-color: $gray-900;
+    }
+
+    #google[show]{
+        color: $white;
+        background-color: lighten($gray-800, 4%);
+    }
+
+    #google:not([show]){
+        color: $white;
+    }
+
+    #available{
+        color: $white;
+    }
+
+    #costContent{
+        color: $white;
+    }
+
+    #costDiv{
+        color: $white;
+    }
+    
+    #costLabel{
+        color: $white;
+    }
+
+    #activityLabel{
+        color: $white;
+    }
+
+    #legend{
+        background-color: $gray-900;
+        color: $white;
+    }
+
+    .hoverLegend{
+        color: darken($white, 50%);
+    }
+
+    #usageOverlay[open]{
+        background-color: lighten($gray-800, 4%);
+    }
+}
+
+.light{
+    .buyMoreCredits:hover, .pleaseLogin:hover{
+        color: black !important;
+    }
+
+    .buyMoreCredits, .pleaseLogin{
+        color: lightblue !important;
+    }
+
+    #downloadPdf{
+        color: black;
+    }
+
+    #google:hover{
+        background-color: $gray-400;
+    }
+
+    #centerGooglelogin{
+        background-color: $gray-200;
+    }
+
+    #google[show]{
+        color: $black;
+        background-color: lighten($gray-200, 4%);
+    }
+
+    #google:not([show]){
+        color: $black;
+    }
+
+    #available{
+        color: $black;
+    }
+
+    #costContent{
+        color: $black;
+    }
+
+    #costDiv{
+        color: $black;
+    }
+    
+    #costLabel{
+        color: $black;
+    }
+
+    #activityLabel{
+        color: $black;
+    }
+
+    #legend{
+        background-color: $gray-100;
+        color: $black;
+    }
+
+    .hoverLegend{
+        color: lighten($black, 50%);
+    }
+
+    #usageOverlay[open]{
+        background-color: darken($gray-200, 4%);
+    }
+}
