@@ -1,0 +1,24 @@
+.msgContent ul {
+  list-style-type: disc;
+  margin-left: 25px;
+}
+.msgContent table {
+  width: 50%;
+  margin-left: 25px;
+}
+.msgContent thead {
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.dark .msgContent ol {
+  list-style: decimal-leading-zero;
+  margin-left: 25px;
+  color: white;
+}
+
+.light .msgContent ol {
+  list-style: decimal-leading-zero;
+  margin-left: 25px;
+  color: black;
+}/*# sourceMappingURL=chatMessageElementStyle.css.map */
