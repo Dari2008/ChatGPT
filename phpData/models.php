@@ -77,7 +77,7 @@ function getTokenFromAccessToken($access_token){
     }
 
     $url = "https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=".$access_token;
-    $CLIENT_ID = "640190834544-spfibcnhqivfp8hpc5po8ke5ilg57t0e.apps.googleusercontent.com";
+    $CLIENT_ID = "";
     
     $data = json_decode(file_get_contents($url), true);
 
